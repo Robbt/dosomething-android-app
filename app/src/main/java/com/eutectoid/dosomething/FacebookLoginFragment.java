@@ -3,6 +3,7 @@ package com.eutectoid.dosomething;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ public class FacebookLoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         FacebookSdk.sdkInitialize(this.getContext());
         View v = inflater.inflate(R.layout.fragment_facebook_login, parent, false);
-        Log.d("myTag", "onCreate Triggered");
+        Log.d("myTag", "Facebook Fragment onCreate Triggered");
         callbackManager = CallbackManager.Factory.create();
         super.onCreate(savedInstanceState);
 
@@ -50,14 +51,20 @@ public class FacebookLoginFragment extends Fragment {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         Log.d("myTag", "Facebook Login Success");
-                        // need to launch a new fragment to replace the login button with a user
-                        mText.setText(
+                        // TODO need to launch a new fragment to replace the login button with a user
+                       /* mText.setText(
                                 "User ID: "
                                         + loginResult.getAccessToken().getUserId()
                                         + "\n" +
                                         "Auth Token: "
                                         + loginResult.getAccessToken().getToken()
-                        );
+                        );*/
+                        FragmentManager fm = getFragmentManager();
+                        Fragment fragment = fm.findFragmentById(R.id.WhatdoList);
+                        if (fragment == null) {
+                            fragment = new FacebookLoginFragment();
+                            fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
+                        }
                     }
 
                     @Override
