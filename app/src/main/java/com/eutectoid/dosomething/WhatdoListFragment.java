@@ -1,6 +1,6 @@
 package com.eutectoid.dosomething;
 
-import android.app.ListFragment;
+
 import android.os.Bundle;
 
 /**
@@ -8,8 +8,9 @@ import android.os.Bundle;
  */
 
 import java.util.ArrayList;
-import com.whatdoListView.Adapter.WhatdoListAdapter;
+import com.eutectoid.dosomething.WhatdoListView.Adapter.WhatdoListAdapter;
 
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.widget.ExpandableListView;
 

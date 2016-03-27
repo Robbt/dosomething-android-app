@@ -34,9 +34,9 @@ public class FacebookLoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
-        FacebookSdk.sdkInitialize(this.getContext());
         View v = inflater.inflate(R.layout.fragment_facebook_login, parent, false);
         Log.d("myTag", "Facebook Fragment onCreate Triggered");
+        FacebookSdk.sdkInitialize(this.getContext());
         callbackManager = CallbackManager.Factory.create();
         super.onCreate(savedInstanceState);
 
@@ -45,7 +45,7 @@ public class FacebookLoginFragment extends Fragment {
         mText = (TextView) v.findViewById(R.id.mText);
         mText.setText("Please Log in to Facebook to use this App.");
         // Other app specific specialization
-        loginButton.setFragment(this);
+        //loginButton.setFragment(this);
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     @Override
@@ -81,9 +81,10 @@ public class FacebookLoginFragment extends Fragment {
         // Inflate the layout for this fragment
         return v;
     }
+/*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 }
