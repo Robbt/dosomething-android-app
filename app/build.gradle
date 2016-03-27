@@ -1,10 +1,23 @@
 apply plugin: 'com.android.application'
 
 
+def getFireBaseDB(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['FIREBASE_DB']
+}
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 
     defaultConfig {
         applicationId "com.eutectoid.dosomething"
@@ -14,11 +27,19 @@ android {
         versionName "1.0"
     }
     buildTypes {
+            applicationVariants.all { variant ->
+                variant.buildConfigField "String", "FIREBASE_DB", getFireBaseDB()
+            }
+
+
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 repositories {
@@ -31,4 +52,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.firebase:firebase-client-android:2.5.2+'
+
 }
