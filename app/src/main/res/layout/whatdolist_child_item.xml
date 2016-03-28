@@ -4,11 +4,17 @@
     android:layout_height="55dip"
     android:background="@color/ExpandChildBackground">
 
-    <TextView
+    <!--TextView
         android:id="@+id/tvChild"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/Black"
-        android:textSize="17dip" />
+        android:textSize="17dip" /-->
+
+    <Button
+        android:id="@+id/bChild"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>

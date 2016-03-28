@@ -11,10 +11,12 @@ import com.eutectoid.dosomething.WhatdoListChild;
 import com.eutectoid.dosomething.WhatdoListGroup;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class WhatdoListAdapter extends BaseExpandableListAdapter {
@@ -36,13 +38,15 @@ public class WhatdoListAdapter extends BaseExpandableListAdapter {
     }
 
     public Object getChild(int groupPosition, int childPosition) {
-        // TODO Auto-generated method stub
         ArrayList<WhatdoListChild> chList = groups.get(groupPosition).getItems();
+        if(childPosition >= chList.size()) {
+            Log.d("myTag", "getChild request out of bounds");
+            return null;
+        }
         return chList.get(childPosition);
     }
 
     public long getChildId(int groupPosition, int childPosition) {
-        // TODO Auto-generated mehod stub
         return childPosition;
     }
 
@@ -51,33 +55,37 @@ public class WhatdoListAdapter extends BaseExpandableListAdapter {
         WhatdoListChild child = (WhatdoListChild)getChild(groupPosition, childPosition);
         if(view == null) {
             LayoutInflater infInflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            view = infInflater.inflate(R.layout.whatdo_fragment, null);
+            view = infInflater.inflate(R.layout.whatdolist_child_item, null);
         }
-        TextView tv = (TextView)view.findViewById(R.id.tvChild);
-        tv.setText(child.getName().toString());
-        tv.setTag(child.getTag());
-        // TODO Auto-generated method stub
+
+        Button b = (Button)view.findViewById(R.id.bChild);
+        b.setText(child.getName());
+        b.setTag(child.getTag());
+
+        b.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                // TODO add button functionality
+
+            }
+        });
+
         return view;
     }
 
     public int getChildrenCount(int groupPosition) {
-        // TODO Auto-generated method stub
         ArrayList<WhatdoListChild> chList = groups.get(groupPosition).getItems();
         return chList.size();
     }
 
     public Object getGroup(int groupPosition) {
-        // TODO Auto-generated method stub
         return groups.get(groupPosition);
     }
 
     public int getGroupCount() {
-        // TODO Auto-generated method stub
         return groups.size();
     }
 
     public long getGroupId(int groupPosition) {
-        // TODO Auto-generated method stub
         return groupPosition;
     }
 
@@ -90,12 +98,10 @@ public class WhatdoListAdapter extends BaseExpandableListAdapter {
         }
         TextView tv = (TextView)view.findViewById(R.id.tvGroup);
         tv.setText(group.getName());
-        // TODO Auto-generated method stub
         return view;
     }
 
     public boolean hasStableIds() {
-        // TODO Auto-generated method stub
         return true;
     }
 

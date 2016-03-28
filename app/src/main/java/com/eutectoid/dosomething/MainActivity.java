@@ -63,7 +63,7 @@ public class MainActivity extends FragmentActivity {
 
         FragmentManager fm = getSupportFragmentManager();
         SplashFragment splashFragment = (SplashFragment) fm.findFragmentById(R.id.splashFragment);
-        // TODO fix the fragments array list to use the correct fragments
+        // TODO add a friends list fragment to display underneath WHATDO,
         fragments[SPLASH] = splashFragment;
         fragments[SELECTION] = fm.findFragmentById(R.id.somethingFragment);
         fragments[WHATDO] = fm.findFragmentById(R.id.WhatdoFragment);
@@ -115,7 +115,9 @@ public class MainActivity extends FragmentActivity {
     public void onPause() {
         super.onPause();
         isResumed = false;
-        LoginManager.getInstance().logOut();
+
+        //LoginManager.getInstance().logOut();
+
         // Call the 'deactivateApp' method to log an app event for use in analytics and advertising
         // reporting.  Do so in the onPause methods of the primary Activities that an app may be
         // launched into.

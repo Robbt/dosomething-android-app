@@ -25,9 +25,8 @@ public class WhatdoListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("myTag", "Whatdo List Creation Success");
+        //Log.d("myTag", "Whatdo List Creation Success");
         //getActivity().setTitle(R.strings.dosomething);
-        ExpListItems = SetStandardGroups();
     }
 
     @Override
@@ -35,6 +34,7 @@ public class WhatdoListFragment extends Fragment {
         View view = inflater.inflate(R.layout.whatdo_fragment, container, false);
 
         ExpandList = (ExpandableListView) view.findViewById(R.id.WhatdoList);
+        ExpListItems = SetStandardGroups();
         ExpAdapter = new WhatdoListAdapter(getActivity(), ExpListItems);
         ExpandList.setAdapter(ExpAdapter);
 
@@ -47,6 +47,7 @@ public class WhatdoListFragment extends Fragment {
 
         WhatdoListGroup activities = new WhatdoListGroup();
         activities.setName("Do Something");
+        // TODO add more children/options, add a custom option?
         WhatdoListChild ch1 = new WhatdoListChild();
         ch1.setName("Anything");
         ch1.setTag(null);
