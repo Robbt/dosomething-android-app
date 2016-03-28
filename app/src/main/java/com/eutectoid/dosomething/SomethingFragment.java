@@ -77,9 +77,6 @@ import java.util.UUID;
 public class SomethingFragment extends Fragment {
 
     private static final String TAG = "SomethingFragment";
-    private static final String MEAL_OBJECT_TYPE = "fb_sample_scrumps:meal";
-    private static final String EAT_ACTION_TYPE = "fb_sample_scrumps:eat";
-
     private static final String PENDING_ANNOUNCE_KEY = "pendingAnnounce";
     private static final int USER_GENERATED_MIN_SIZE = 480;
     private static final float MAX_TEXTURE_SIZE = 1024f;
@@ -102,6 +99,7 @@ public class SomethingFragment extends Fragment {
 
     private CallbackManager callbackManager;
     private AccessTokenTracker accessTokenTracker;
+
     private FacebookCallback<Sharer.Result> shareCallback =
             new FacebookCallback<Sharer.Result>() {
                 @Override
@@ -167,6 +165,7 @@ public class SomethingFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.selection_list);
         photoThumbnail = (ImageView) view.findViewById(R.id.selected_image);
 
+
         announceProgressDialog = new ProgressDialog(getActivity());
         announceProgressDialog.setMessage(getString(R.string.progress_dialog_text));
 
@@ -185,6 +184,15 @@ public class SomethingFragment extends Fragment {
         messageButton.setFragment(this);
         shareButton.registerCallback(callbackManager, shareCallback);
         shareButton.setFragment(this);
+
+        /* Adding DoSomething Button */
+        Button doButton = (Button) view.findViewById(R.id.do_button);
+        doButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.showWhatDoFragment();
+            }
+        });
 
         profilePictureView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -462,7 +470,7 @@ public class SomethingFragment extends Fragment {
 
     private ShareOpenGraphAction.Builder createEatActionBuilder() {
         ShareOpenGraphAction.Builder builder = new ShareOpenGraphAction.Builder()
-                .setActionType(EAT_ACTION_TYPE);
+                .setActionType("EAT_ACTION_TYPE");
         for (BaseListElement element : listElements) {
             element.populateOpenGraphAction(builder);
         }
@@ -585,7 +593,7 @@ public class SomethingFragment extends Fragment {
                     actionBuilder.putString("meal", foodChoiceUrl);
                 } else {
                     ShareOpenGraphObject mealObject = new ShareOpenGraphObject.Builder()
-                            .putString("og:type", MEAL_OBJECT_TYPE)
+                            .putString("og:type", "MEAL_OBJECT_TYPE")
                             .putString("og:title", foodChoice)
                             .build();
                     actionBuilder.putObject("meal", mealObject);

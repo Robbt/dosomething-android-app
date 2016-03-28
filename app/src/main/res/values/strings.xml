@@ -55,6 +55,7 @@
     <string name="error_unknown">An unknown error occurred, please contact the developer with the following message: %1$s</string>
     <string name="exception">Exception: %1$s</string>
     <string name="ok">OK</string>
+    <string name="dobutton_text">I Want To Do Something</string>
     <string name="cancel">Cancel</string>
     <string name="usersettings_fragment_log_in_button">Log in&#8230;</string>
     <string name="usersettings_fragment_logged_in">Logged in</string>

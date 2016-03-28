@@ -20,7 +20,7 @@ public class MainActivity extends FragmentActivity {
 
 
     private static final String USER_SKIPPED_LOGIN_KEY = "user_skipped_login";
-
+    // these are the keys to the fragment array
     private static final int SPLASH = 0;
     private static final int SELECTION = 1;
     private static final int WHATDO = 2;
@@ -146,6 +146,8 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void showSplashFragment() { showFragment(SPLASH, true); }
+
+    public void showWhatDoFragment() { showFragment(WHATDO, true); }
 
 
     private void showFragment(int fragmentIndex, boolean addToBackStack) {

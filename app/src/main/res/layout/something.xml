@@ -35,6 +35,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <Button
+                android:id="@+id/do_button"
+                android:text="@string/dobutton_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <com.eutectoid.dosomething.FullListView
                 android:id="@+id/selection_list"
