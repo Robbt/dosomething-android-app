@@ -15,4 +15,8 @@
         android:id="@+id/userSettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <fragment android:name="com.eutectoid.dosomething.WhatdoListFragment"
+        android:id="@+id/WhatdoFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.eutectoid.dosomething;
 import android.content.Intent;
+import com.facebook.FacebookSdk;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +11,7 @@ import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 
 /**
  * Created by robbt on 3/20/16.
@@ -21,7 +23,8 @@ public class MainActivity extends FragmentActivity {
 
     private static final int SPLASH = 0;
     private static final int SELECTION = 1;
-    private static final int SETTINGS = 2;
+    private static final int WHATDO = 2;
+    private static final int SETTINGS = 3;
     private static final int FRAGMENT_COUNT = SETTINGS + 1;
     private Fragment[] fragments = new Fragment[FRAGMENT_COUNT];
     private boolean isResumed = false;
@@ -32,7 +35,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (savedInstanceState != null) {
             userSkippedLogin = savedInstanceState.getBoolean(USER_SKIPPED_LOGIN_KEY);
         }
@@ -61,8 +63,10 @@ public class MainActivity extends FragmentActivity {
 
         FragmentManager fm = getSupportFragmentManager();
         SplashFragment splashFragment = (SplashFragment) fm.findFragmentById(R.id.splashFragment);
+        // TODO fix the fragments array list to use the correct fragments
         fragments[SPLASH] = splashFragment;
         fragments[SELECTION] = fm.findFragmentById(R.id.somethingFragment);
+        fragments[WHATDO] = fm.findFragmentById(R.id.WhatdoFragment);
         fragments[SETTINGS] = fm.findFragmentById(R.id.userSettingsFragment);
 
         FragmentTransaction transaction = fm.beginTransaction();
@@ -111,7 +115,7 @@ public class MainActivity extends FragmentActivity {
     public void onPause() {
         super.onPause();
         isResumed = false;
-
+        LoginManager.getInstance().logOut();
         // Call the 'deactivateApp' method to log an app event for use in analytics and advertising
         // reporting.  Do so in the onPause methods of the primary Activities that an app may be
         // launched into.
@@ -130,7 +134,6 @@ public class MainActivity extends FragmentActivity {
         accessTokenTracker.stopTracking();
     }
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -138,14 +141,11 @@ public class MainActivity extends FragmentActivity {
         outState.putBoolean(USER_SKIPPED_LOGIN_KEY, userSkippedLogin);
     }
 
-
     public void showSettingsFragment() {
         showFragment(SETTINGS, true);
     }
 
-    public void showSplashFragment() {
-        showFragment(SPLASH, true);
-    }
+    public void showSplashFragment() { showFragment(SPLASH, true); }
 
 
     private void showFragment(int fragmentIndex, boolean addToBackStack) {

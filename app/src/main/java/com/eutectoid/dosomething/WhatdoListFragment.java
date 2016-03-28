@@ -10,11 +10,14 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import com.eutectoid.dosomething.WhatdoListView.Adapter.WhatdoListAdapter;
 
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
-public class WhatdoListFragment extends ListFragment {
+public class WhatdoListFragment extends Fragment {
     private WhatdoListAdapter ExpAdapter;
     private ArrayList<WhatdoListGroup> ExpListItems;
     private ExpandableListView ExpandList;
@@ -24,15 +27,23 @@ public class WhatdoListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         Log.d("myTag", "Whatdo List Creation Success");
         //getActivity().setTitle(R.strings.dosomething);
-        ExpandList = (ExpandableListView) getView().findViewById(R.id.WhatdoList);
         ExpListItems = SetStandardGroups();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.whatdo_fragment, container, false);
+
+        ExpandList = (ExpandableListView) view.findViewById(R.id.WhatdoList);
         ExpAdapter = new WhatdoListAdapter(getActivity(), ExpListItems);
         ExpandList.setAdapter(ExpAdapter);
+
+        return view;
     }
 
     public ArrayList<WhatdoListGroup> SetStandardGroups() {
-        ArrayList<WhatdoListGroup> list = new ArrayList<WhatdoListGroup>();
-        ArrayList<WhatdoListChild> list2 = new ArrayList<WhatdoListChild>();
+        ArrayList<WhatdoListGroup> list = new ArrayList<>();
+        ArrayList<WhatdoListChild> list2 = new ArrayList<>();
 
         WhatdoListGroup activities = new WhatdoListGroup();
         activities.setName("Do Something");
