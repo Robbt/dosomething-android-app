@@ -23,8 +23,7 @@ public class MainActivity extends FragmentActivity {
     // these are the keys to the fragment array
     private static final int SPLASH = 0;
     private static final int SELECTION = 1;
-    private static final int WHATDO = 2;
-    private static final int SETTINGS = 3;
+    private static final int SETTINGS = 2;
     private static final int FRAGMENT_COUNT = SETTINGS + 1;
     private Fragment[] fragments = new Fragment[FRAGMENT_COUNT];
     private boolean isResumed = false;
@@ -66,7 +65,6 @@ public class MainActivity extends FragmentActivity {
         // TODO add a friends list fragment to display underneath WHATDO,
         fragments[SPLASH] = splashFragment;
         fragments[SELECTION] = fm.findFragmentById(R.id.somethingFragment);
-        fragments[WHATDO] = fm.findFragmentById(R.id.WhatdoFragment);
         fragments[SETTINGS] = fm.findFragmentById(R.id.userSettingsFragment);
 
         FragmentTransaction transaction = fm.beginTransaction();
@@ -75,6 +73,9 @@ public class MainActivity extends FragmentActivity {
         }
 
         transaction.commit();
+
+
+
 
         splashFragment.setSkipLoginCallback(new SplashFragment.SkipLoginCallback() {
             @Override
@@ -149,8 +150,14 @@ public class MainActivity extends FragmentActivity {
 
     public void showSplashFragment() { showFragment(SPLASH, true); }
 
-    public void showWhatDoFragment() { showFragment(WHATDO, true); }
-
+    public void showWhatDoFragment() {
+        //showFragment(WHATDO, true);
+        WhatdoListFragment whatdoFragment = new WhatdoListFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.whatdocontainer, whatdoFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
     private void showFragment(int fragmentIndex, boolean addToBackStack) {
         FragmentManager fm = getSupportFragmentManager();
