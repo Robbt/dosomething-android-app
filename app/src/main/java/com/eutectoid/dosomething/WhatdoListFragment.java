@@ -44,7 +44,7 @@ public class WhatdoListFragment extends Fragment {
     public ArrayList<WhatdoListGroup> SetStandardGroups() {
         ArrayList<WhatdoListGroup> list = new ArrayList<>();
         ArrayList<WhatdoListChild> list2 = new ArrayList<>();
-
+        // TODO Fix Style or Color Add EMOJI ?
         WhatdoListGroup activities = new WhatdoListGroup();
         activities.setName("Do Something");
         // TODO add more children/options, add a custom option?

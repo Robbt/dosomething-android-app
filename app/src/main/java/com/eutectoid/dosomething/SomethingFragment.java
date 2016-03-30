@@ -126,7 +126,7 @@ public class SomethingFragment extends Fragment {
         Fragment whatdoListFragment = new WhatdoListFragment();
         FragmentTransaction newtransaction = getChildFragmentManager().beginTransaction();
         newtransaction.add(R.id.whatdocontainer, whatdoListFragment);
-        newtransaction.commit();
+
     }
 
     @Override
@@ -196,6 +196,8 @@ public class SomethingFragment extends Fragment {
         });
 
 
+        //TODO Add show FriendsList Function and Fragment FriendsListFragment
+
 
 
         profilePictureView.setOnClickListener(new View.OnClickListener() {
@@ -218,8 +220,8 @@ public class SomethingFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-         List<User> ActiveUsers =  ((DoSomethingApplication) getActivity().getApplication())
-              .getActiveUsers();
+  /*       List<User> ActiveUsers =  ((DoSomethingApplication) getActivity().getApplication())
+              .getActiveUsers(); */
          List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
                 .getFacebookFriends();
             callbackManager.onActivityResult(requestCode, resultCode, data);

@@ -39,6 +39,8 @@ public class DoSomethingApplication extends Application{
 
     // This method queries the firebase and inserts all of the entries into the listener.
     public List<User> getActiveUsers() {
+        // TODO - need to fix the sample user
+        // TODO - add fake facebook users as default ON
         // pull the value from the secrets.properties file so that it doesn't get shared via github
         String FIREBASE_DB = BuildConfig.FIREBASE_DB;
         Firebase refActive = new Firebase(FIREBASE_DB);
@@ -61,6 +63,8 @@ public class DoSomethingApplication extends Application{
     return activeUsers;
     }
     public List<User> getFacebookFriends() {
+        //TODO Create an List<Users> from Facebook
+        // TODO Test this Method TJ
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         String userID = AccessToken.USER_ID_KEY;
 
@@ -77,6 +81,4 @@ public class DoSomethingApplication extends Application{
                 });
         return facebookFriends;
     }
-
-
 }

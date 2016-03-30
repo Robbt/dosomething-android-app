@@ -58,7 +58,7 @@ public class FriendsListFragment extends Fragment {
 
 
     private FriendPickerType friendPickerType = FriendPickerType.FRIENDS;
-
+    // TODO - Write code using example code to parse the DoSomethingApplication.GetFacebookFriends List<User> TJ
 
     private GraphRequest createRequest() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();

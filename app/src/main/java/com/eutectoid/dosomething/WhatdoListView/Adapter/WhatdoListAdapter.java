@@ -64,7 +64,9 @@ public class WhatdoListAdapter extends BaseExpandableListAdapter {
 
         b.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                // TODO add button functionality
+                // TODO add button functionality - call method that creates user Object and submits it
+                // TODO make code to replace list with Button that replaces the WhatdoList with a Button listing the activity
+
 
             }
         });
@@ -106,7 +108,6 @@ public class WhatdoListAdapter extends BaseExpandableListAdapter {
     }
 
     public boolean isChildSelectable(int arg0, int arg1) {
-        // TODO Auto-generated method stub
         return true;
     }
 }

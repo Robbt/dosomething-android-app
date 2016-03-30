@@ -14,6 +14,11 @@ public class User {
 
 
     public User() {
+        // TODO - create use code that adds itself to FireBase ActiveUsers and stores itself between
+        // activities in a Bundle
+        // TODO add method to add this User to Firebase
+        // TODO add method that removes this User from Firebase
+        // TODO - build set method and get methods for this Object
     }
 
     public String getFacebookid() {
