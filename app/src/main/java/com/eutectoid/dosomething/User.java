@@ -21,6 +21,8 @@ public class User {
         // TODO - build set method and get methods for this Object
     }
 
+    public void setFacebookid(String id) { facebookid = id; }
+
     public String getFacebookid() {
         return facebookid;
     }

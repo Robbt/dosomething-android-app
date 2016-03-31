@@ -30,7 +30,7 @@ import java.util.List;
 public class DoSomethingApplication extends Application{
     private String userId;
     private List<User> activeUsers;
-    private List<User> facebookFriends;
+    private ArrayList<User> facebookFriends = new ArrayList<>();
 
     @Override
         public void onCreate() {
@@ -66,11 +66,9 @@ public class DoSomethingApplication extends Application{
         return activeUsers;
     }
     public List<User> getFacebookFriends() {
-        //TODO Create an List<Users> from Facebook
-        Log.d("myTag", "Made it into getFacebookFriends()");
+        //Log.d("myTag", "Made it into getFacebookFriends()");
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         String userID = AccessToken.USER_ID_KEY;
-        final ArrayList<User> users = new ArrayList<>();
 
         GraphRequest request = GraphRequest.newMyFriendsRequest(
                 accessToken,
@@ -85,14 +83,14 @@ public class DoSomethingApplication extends Application{
                                 JSONObject obj = new JSONObject(response.getRawResponse());
                                 JSONArray data = obj.getJSONArray("data");
                                 for(int i = 0; i < data.length(); ++i) {
-                                    // TODO figure this mess out TJ
-                                    User user;
-                                    object.getJSONObject(i).getString("name");
-                                    Log.d("myTag", object.getJSONObject(i).toString());
+                                    // TODO get more info from Facebook
+                                    User user = new User();
+                                    user.setFacebookid(data.getJSONObject(i).getString("id"));
+                                    facebookFriends.add(user);
                                 }
                             }
                             catch(JSONException e) {
-                                Log.d("myTag", e.getMessage());
+                                Log.d("myTag", "JSONException: " + e.getMessage());
                             }
                         }
                     }
