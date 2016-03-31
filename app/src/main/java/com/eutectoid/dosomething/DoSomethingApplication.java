@@ -1,6 +1,8 @@
 package com.eutectoid.dosomething;
 
 import android.app.Application;
+import android.os.Bundle;
+import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
@@ -14,6 +16,7 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -60,25 +63,45 @@ public class DoSomethingApplication extends Application{
             public void onCancelled(FirebaseError firebaseError) {
             }
         });
-    return activeUsers;
+        return activeUsers;
     }
     public List<User> getFacebookFriends() {
         //TODO Create an List<Users> from Facebook
-        // TODO Test this Method TJ
+        Log.d("myTag", "Made it into getFacebookFriends()");
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         String userID = AccessToken.USER_ID_KEY;
+        final ArrayList<User> users = new ArrayList<>();
 
         GraphRequest request = GraphRequest.newMyFriendsRequest(
                 accessToken,
                 new GraphRequest.GraphJSONArrayCallback() {
                     @Override
-                    public void onCompleted(
-                            JSONArray object,
-                            GraphResponse response) {
-
-
+                    public void onCompleted(JSONArray object, GraphResponse response) {
+                        if(response.getError() != null) {
+                            Log.d("myTag", "ResponseError:  " + response.getError().getErrorMessage());
+                        }
+                        else {
+                            try {
+                                JSONObject obj = new JSONObject(response.getRawResponse());
+                                JSONArray data = obj.getJSONArray("data");
+                                for(int i = 0; i < data.length(); ++i) {
+                                    // TODO figure this mess out TJ
+                                    User user;
+                                    object.getJSONObject(i).getString("name");
+                                    Log.d("myTag", object.getJSONObject(i).toString());
+                                }
+                            }
+                            catch(JSONException e) {
+                                Log.d("myTag", e.getMessage());
+                            }
+                        }
                     }
                 });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link");
+        request.setParameters(parameters);
+        request.executeAsync();
+
         return facebookFriends;
     }
 }

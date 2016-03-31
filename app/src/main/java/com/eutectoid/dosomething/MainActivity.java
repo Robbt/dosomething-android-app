@@ -74,9 +74,6 @@ public class MainActivity extends FragmentActivity {
 
         transaction.commit();
 
-
-
-
         splashFragment.setSkipLoginCallback(new SplashFragment.SkipLoginCallback() {
             @Override
             public void onSkipLoginPressed() {
@@ -85,8 +82,6 @@ public class MainActivity extends FragmentActivity {
             }
         });
     }
-
-
 
     @Override
     public void onResume() {
@@ -169,6 +164,13 @@ public class MainActivity extends FragmentActivity {
                 transaction.hide(fragments[i]);
             }
         }
+
+        // TODO move to proper place
+        if(fragmentIndex == SELECTION) {
+            DoSomethingApplication app = (DoSomethingApplication) getApplication();
+            app.getFacebookFriends();
+        }
+
         if (addToBackStack) {
             transaction.addToBackStack(null);
         }
