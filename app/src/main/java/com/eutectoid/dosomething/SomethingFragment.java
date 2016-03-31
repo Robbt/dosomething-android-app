@@ -126,7 +126,7 @@ public class SomethingFragment extends Fragment {
         Fragment whatdoListFragment = new WhatdoListFragment();
         FragmentTransaction newtransaction = getChildFragmentManager().beginTransaction();
         newtransaction.add(R.id.whatdocontainer, whatdoListFragment);
-
+        newtransaction.commit();
     }
 
     @Override
