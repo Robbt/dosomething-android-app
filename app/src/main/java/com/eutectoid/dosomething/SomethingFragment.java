@@ -202,7 +202,6 @@ public class SomethingFragment extends Fragment {
             }
         });
 
-
         //TODO Add show FriendsList Function and Fragment FriendsListFragment
 
 
