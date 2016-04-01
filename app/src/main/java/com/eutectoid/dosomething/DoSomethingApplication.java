@@ -85,6 +85,8 @@ public class DoSomethingApplication extends Application{
         }
     }
 
+
+
     public List<User> getFacebookFriends() {
         //Log.d("myTag", "Made it into getFacebookFriends()");
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
@@ -120,5 +122,14 @@ public class DoSomethingApplication extends Application{
         request.setParameters(parameters);
         request.executeAsync();
         return facebookFriends;
+    }
+
+    public User getUser(String facebookid) {
+        for (User user : facebookFriends) {
+            if (user.getFacebookid().equals(facebookid)) {
+                return user;
+            }
+        }
+        return null;
     }
 }

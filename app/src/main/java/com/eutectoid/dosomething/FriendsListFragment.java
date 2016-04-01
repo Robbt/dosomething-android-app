@@ -3,6 +3,7 @@ package com.eutectoid.dosomething;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.eutectoid.dosomething.R;
 import com.facebook.AccessToken;
@@ -33,56 +35,56 @@ import java.util.Set;
  * Created by robbt on 3/26/16.
  */
 public class FriendsListFragment extends Fragment {
-
-
-    public enum FriendPickerType {
-        FRIENDS("/friends"),
-        TAGGABLE_FRIENDS("/taggable_friends"),
-        INVITABLE_FRIENDS("/invitable_friends");
-
-        private final String requestPath;
-
-        FriendPickerType(String path) {
-            this.requestPath = path;
-        }
-
-        String getRequestPath() {
-            return requestPath;
-        }
-    }
+    private RecyclerView mFacebookFriendsRecyclerView;
 
     private static final String ID = "id";
     private static final String NAME = "name";
     private String userId;
-    private ListView mListView;
 
-
-    private FriendPickerType friendPickerType = FriendPickerType.FRIENDS;
-    // TODO - Write code using example code to parse the DoSomethingApplication.GetFacebookFriends List<User> TJ
-
-    private GraphRequest createRequest() {
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        String userID = AccessToken.USER_ID_KEY;
-
-        GraphRequest request = GraphRequest.newMyFriendsRequest(
-                accessToken,
-                new GraphRequest.GraphJSONArrayCallback() {
-                    @Override
-                    public void onCompleted(
-                            JSONArray object,
-                            GraphResponse response) {
-                        object.toString();
-                    }
-                });
-        return request;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.friendlist_fragment, container, false);
-        this.createRequest();
-        mListView = (ListView) view.findViewById(R.id.friend_list_view);
+        mFacebookFriendsRecyclerView = (RecyclerView) view.findViewById(R.id.friend_recycler_view);
+        mFacebookFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        updateUI();
         return view;
+    }
+
+    private void updateUI() {
+        //need to finish implementing recycler view as per page 184 of big nerd guide
+    }
+
+    private class FriendHolder extends RecyclerView.ViewHolder {
+        public TextView mTitleTextView;
+
+        public FriendHolder(View itemView) {
+            super(itemView);
+            mTitleTextView = (TextView) itemView;
+        }
+    }
+
+    private class FriendAdapter extends RecyclerView.Adapter<FriendHolder> {
+        private List<User> mFriends;
+
+        public FriendAdapter(List<User> friends) {
+            mFriends = friends;
+        }
+        @Override
+        public FriendHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            View view = layoutInflater.inflate(android.R.layout.simple_list_item_1,parent, false);
+            return new FriendHolder(view);
+        }
+        @Override
+        public void onBindViewHolder(FriendHolder holder, int position) {
+            User user = mFriends.get(position);
+            holder.mTitleTextView.setText(user.getFacebookid());
+        }
+        @Override
+        public int getItemCount() {
+            return mFriends.size();
+        }
     }
 
 }

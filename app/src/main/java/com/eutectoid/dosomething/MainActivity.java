@@ -35,8 +35,18 @@ public class MainActivity extends FragmentActivity {
 
 
     public void AddActiveUser(String activity) {
+        Bundle bundle = new Bundle();
+        // call the active user, this is called from the button of whatdolist adapter
         ((DoSomethingApplication) this.getApplication())
-                .addActiveUser(activity);    }
+                .addActiveUser(activity);
+    FragmentManager manager= getSupportFragmentManager();
+        // now i need to delete the whatdo list - using this idea http://stackoverflow.com/questions/22474584/remove-old-fragment-from-fragment-manager#22474821
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().findFragmentByTag("WHATDOFRAGMENT");
+        if(fragment != null) {
+            getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().beginTransaction().remove(fragment).commit();
+        }
+        //getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().beginTransaction().add(R.id.whatdocontainer, new FriendsListFragment(), "FRIENDSLIST").commit();
+    }
     public interface IMethodCaller{
         void AddActiveUser();
     }

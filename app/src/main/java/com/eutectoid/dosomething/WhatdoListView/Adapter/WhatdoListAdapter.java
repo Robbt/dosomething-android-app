@@ -70,9 +70,10 @@ public class WhatdoListAdapter extends BaseExpandableListAdapter {
         b.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(context instanceof MainActivity) {
                     ((MainActivity) context).AddActiveUser(b.getText().toString());
-                    // TODO add button functionality - call method that creates user Object and submits it http://stackoverflow.com/questions/12142255/call-activity-method-from-adapter
+                    // DONE add button functionality - call method that creates user Object and submits it http://stackoverflow.com/questions/12142255/call-activity-method-from-adapter
                     // TODO make code to replace list with Button that replaces the WhatdoList with a Button listing the activity
                 }
 

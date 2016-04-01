@@ -18,30 +18,15 @@
     IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
     CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#FFFFFF">
 
-    <include layout="@layout/picker_title_bar_stub"/>
 
-    <ListView
-        android:id="@+id/friend_list_view"
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/friend_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@drawable/picker_list_divider"
         android:fastScrollEnabled="true"
         android:scrollbars="vertical"
         android:listSelector="@drawable/picker_list_selector"
         android:cacheColorHint="#FFFFFF"
         />
-
-    <ProgressBar android:indeterminate="true"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:id="@+id/com_facebook_picker_activity_circle"
-                 style="@android:style/Widget.ProgressBar"
-                 android:layout_centerInParent="true"
-                 android:visibility="invisible"
-        />
-</RelativeLayout>

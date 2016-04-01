@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 
-def getFireBaseDB(){
+def getFireBaseDB() {
     def Properties props = new Properties()
     props.load(new FileInputStream(new File('secrets.properties')))
     return props['FIREBASE_DB']
@@ -27,9 +27,9 @@ android {
         versionName "1.0"
     }
     buildTypes {
-            applicationVariants.all { variant ->
-                variant.buildConfigField "String", "FIREBASE_DB", getFireBaseDB()
-            }
+        applicationVariants.all { variant ->
+            variant.buildConfigField "String", "FIREBASE_DB", getFireBaseDB()
+        }
 
 
 
@@ -47,11 +47,11 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:24.0.0-alpha1'
+    compile 'com.android.support:design:24.0.0-alpha1'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-    compile 'com.firebase:firebase-client-android:2.5.2+'
-
+    compile 'com.firebase:firebase-client-android:2.5.2'
+    compile 'com.android.support:recyclerview-v7:24.0.0-alpha1'
 }

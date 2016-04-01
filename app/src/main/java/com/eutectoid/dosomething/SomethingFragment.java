@@ -128,7 +128,7 @@ public class SomethingFragment extends Fragment {
     public void showWhatDoFragment() {
         Fragment whatdoListFragment = new WhatdoListFragment();
         FragmentTransaction newtransaction = getChildFragmentManager().beginTransaction();
-        newtransaction.add(R.id.whatdocontainer, whatdoListFragment);
+        newtransaction.add(R.id.whatdocontainer, whatdoListFragment,"WHATDOFRAGMENT");
         newtransaction.commit();
     }
 
