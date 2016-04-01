@@ -45,7 +45,7 @@ public class MainActivity extends FragmentActivity {
         if(fragment != null) {
             getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().beginTransaction().remove(fragment).commit();
         }
-        //getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().beginTransaction().add(R.id.whatdocontainer, new FriendsListFragment(), "FRIENDSLIST").commit();
+        getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().beginTransaction().add(R.id.whatdocontainer, new FriendsListFragment(), "FRIENDSLIST").commit();
     }
     public interface IMethodCaller{
         void AddActiveUser();

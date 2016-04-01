@@ -54,7 +54,7 @@ public class FriendsListFragment extends Fragment {
 
     private void updateUI() {
         List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
-                .getFacebookFriends();
+                .getActiveUsers();
                 mAdapter = new FriendAdapter(FacebookFriends);
                 mFacebookFriendsRecyclerView.setAdapter(mAdapter);
 

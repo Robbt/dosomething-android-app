@@ -71,7 +71,10 @@ public class DoSomethingApplication extends Application{
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         if (accessToken != null) {
             String userID = accessToken.getUserId();
+            String username = "Robbt E";
+            // TODO encode lookup of user name from facebook
             User myUser = new User(userID);
+            myUser.setUsername(username);
             myUser.setIsactive(true);
             myUser.setActivity(activity);
             String FIREBASE_DB = BuildConfig.FIREBASE_DB;
@@ -79,12 +82,12 @@ public class DoSomethingApplication extends Application{
             Firebase newUser = refActive.push();
             Map<String, String> myUserDB = new HashMap<String, String>();
             myUserDB.put("facebookid", myUser.getFacebookid());
+            myUserDB.put("username", myUser.getUsername());
             myUserDB.put("activity", myUser.getActivity());
-            myUserDB.put("isActive", myUser.getIsActive().toString());
+            myUserDB.put("isactive", myUser.getIsActive().toString());
             refActive.push().setValue(myUserDB);
         }
     }
-
 
 
     public List<User> getFacebookFriends() {
