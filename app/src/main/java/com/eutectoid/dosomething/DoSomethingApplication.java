@@ -125,6 +125,29 @@ public class DoSomethingApplication extends Application{
         parameters.putString("fields", "id,name,link");
         request.setParameters(parameters);
         request.executeAsync();
+
+        // Test Users
+        User temp1 = new User();
+        temp1.setFacebookid("104135979983213");
+        temp1.setUsername("Rick Alaafjdccbdbb Occhinosen");
+        temp1.setActivity("Do Anything");
+        temp1.setIsactive(true);
+        facebookFriends.add(temp1);
+
+        User temp2 = new User();
+        temp2.setFacebookid("110149799380373");
+        temp2.setUsername("Margaret Alaaefjeiehih Chengstein");
+        temp2.setActivity("Watch a Movie");
+        temp2.setIsactive(true);
+        facebookFriends.add(temp2);
+
+        User temp3 = new User();
+        temp3.setFacebookid("110530546008966");
+        temp3.setUsername("Bill Alaaefjfbeffe Martinazzisen");
+        temp3.setActivity("Eat Food");
+        temp3.setIsactive(true);
+        facebookFriends.add(temp3);
+
         return facebookFriends;
     }
 
