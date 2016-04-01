@@ -40,6 +40,7 @@ public class FriendsListFragment extends Fragment {
     private static final String ID = "id";
     private static final String NAME = "name";
     private String userId;
+    private FriendAdapter mAdapter;
 
 
     @Override
@@ -52,6 +53,11 @@ public class FriendsListFragment extends Fragment {
     }
 
     private void updateUI() {
+        List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
+                .getFacebookFriends();
+                mAdapter = new FriendAdapter(FacebookFriends);
+                mFacebookFriendsRecyclerView.setAdapter(mAdapter);
+
         //need to finish implementing recycler view as per page 184 of big nerd guide
     }
 
@@ -69,6 +75,7 @@ public class FriendsListFragment extends Fragment {
 
         public FriendAdapter(List<User> friends) {
             mFriends = friends;
+
         }
         @Override
         public FriendHolder onCreateViewHolder(ViewGroup parent, int viewType) {

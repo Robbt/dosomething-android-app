@@ -108,6 +108,7 @@ public class DoSomethingApplication extends Application{
                                     // TODO get more info from Facebook
                                     User user = new User();
                                     user.setFacebookid(data.getJSONObject(i).getString("id"));
+                                    user.setUsername(data.getJSONObject(i).getString("name"));
                                     facebookFriends.add(user);
                                 }
                             }
