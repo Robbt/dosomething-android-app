@@ -62,11 +62,20 @@ public class FriendsListFragment extends Fragment {
     }
 
     private class FriendHolder extends RecyclerView.ViewHolder {
-        public TextView mTitleTextView;
+        private User mFriend;
+
+        private TextView mFriendName;
+        private TextView mFriendActivity;
 
         public FriendHolder(View itemView) {
             super(itemView);
-            mTitleTextView = (TextView) itemView;
+            mFriendName = (TextView) itemView.findViewById(R.id.list_item_friend_name_text_view);
+            mFriendActivity = (TextView) itemView.findViewById(R.id.list_item_friend_activity_text_view);
+        }
+        public void bindFriend(User user) {
+            mFriend = user;
+            mFriendName.setText(user.getUsername());
+            mFriendActivity.setText(user.getActivity());
         }
     }
 
@@ -80,13 +89,13 @@ public class FriendsListFragment extends Fragment {
         @Override
         public FriendHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(android.R.layout.simple_list_item_1,parent, false);
+            View view = layoutInflater.inflate(R.layout.friend_list_item,parent, false);
             return new FriendHolder(view);
         }
         @Override
         public void onBindViewHolder(FriendHolder holder, int position) {
             User user = mFriends.get(position);
-            holder.mTitleTextView.setText(user.getFacebookid());
+            holder.bindFriend(user);
         }
         @Override
         public int getItemCount() {
