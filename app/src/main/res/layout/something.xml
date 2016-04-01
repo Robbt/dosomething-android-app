@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:background="#FFF"
         android:fillViewport="true">
-        <Button
+        <!--Button
             android:background="#FF4081"
             android:id="@+id/do_button"
             android:layout_margin="20px"
@@ -38,7 +38,7 @@
             android:text="@string/dobutton_text"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"/-->
 
     </RelativeLayout>
     <FrameLayout
