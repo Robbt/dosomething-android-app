@@ -85,7 +85,10 @@ public class SomethingFragment extends Fragment {
 
     private static final String PERMISSION = "publish_actions";
 
-    private TextView announceButton;
+
+    public User myUser;
+
+        private TextView announceButton;
     private ShareButton shareButton;
     private SendButton messageButton;
     private ProfilePictureView profilePictureView;
@@ -142,6 +145,7 @@ public class SomethingFragment extends Fragment {
                 updateWithToken(currentAccessToken);
             }
         };
+
     }
 
     private void updateWithToken(AccessToken currentAccessToken) {
@@ -160,6 +164,7 @@ public class SomethingFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.something, container, false);
 
+
         profilePictureView = (ProfilePictureView) view.findViewById(R.id.selection_profile_pic);
         profilePictureView.setCropped(true);
         announceButton = (TextView) view.findViewById(R.id.announce_text);
@@ -174,7 +179,9 @@ public class SomethingFragment extends Fragment {
             messageButton.setVisibility(View.VISIBLE);
         }
 
-        announceButton.setOnClickListener(new View.OnClickListener() {
+
+
+            announceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 handleAnnounce();
@@ -218,7 +225,7 @@ public class SomethingFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult ( int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
   /*       List<User> ActiveUsers =  ((DoSomethingApplication) getActivity().getApplication())
               .getActiveUsers(); */
@@ -334,6 +341,10 @@ public class SomethingFragment extends Fragment {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         if (accessToken != null) {
             profilePictureView.setProfileId(accessToken.getUserId());
+
+        }
+        if (accessToken != null) {
+            myUser = new User(accessToken.getUserId());
 
         }
 

@@ -20,7 +20,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -65,6 +67,24 @@ public class DoSomethingApplication extends Application{
         });
         return activeUsers;
     }
+    public void addActiveUser(String activity) {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken != null) {
+            String userID = accessToken.getUserId();
+            User myUser = new User(userID);
+            myUser.setIsactive(true);
+            myUser.setActivity(activity);
+            String FIREBASE_DB = BuildConfig.FIREBASE_DB;
+            Firebase refActive = new Firebase(FIREBASE_DB);
+            Firebase newUser = refActive.push();
+            Map<String, String> myUserDB = new HashMap<String, String>();
+            myUserDB.put("facebookid", myUser.getFacebookid());
+            myUserDB.put("activity", myUser.getActivity());
+            myUserDB.put("isActive", myUser.getIsActive().toString());
+            refActive.push().setValue(myUserDB);
+        }
+    }
+
     public List<User> getFacebookFriends() {
         //Log.d("myTag", "Made it into getFacebookFriends()");
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
@@ -99,7 +119,6 @@ public class DoSomethingApplication extends Application{
         parameters.putString("fields", "id,name,link");
         request.setParameters(parameters);
         request.executeAsync();
-
         return facebookFriends;
     }
 }

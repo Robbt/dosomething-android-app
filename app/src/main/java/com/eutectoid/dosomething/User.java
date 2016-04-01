@@ -12,8 +12,13 @@ public class User {
     private String activity;
     private boolean isactive;
 
-
     public User() {
+    }
+
+    public User(String facebookid) {
+        this.facebookid = facebookid;
+        this.activity = "";
+        this.isactive = false;
         // TODO - create use code that adds itself to FireBase ActiveUsers and stores itself between
         // activities in a Bundle
         // TODO add method to add this User to Firebase
@@ -28,6 +33,13 @@ public class User {
     }
     public String getActivity() {
         return activity;
+    }
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
+
+    public void setIsactive(boolean isactive) {
+        this.isactive = isactive;
     }
     public Boolean getIsActive() {
         return isactive;

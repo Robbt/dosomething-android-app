@@ -46,7 +46,7 @@ public class WhatdoListFragment extends Fragment {
         ArrayList<WhatdoListChild> list2 = new ArrayList<>();
         // TODO Fix Style or Color Add EMOJI ?
         WhatdoListGroup activities = new WhatdoListGroup();
-        activities.setName("Do Something");
+        activities.setName("Click on what you want to do.");
         // TODO add more children/options, add a custom option?
         WhatdoListChild ch1 = new WhatdoListChild();
         ch1.setName("Anything");
@@ -57,6 +57,7 @@ public class WhatdoListFragment extends Fragment {
         ch2.setName("Watch a Movie");
         ch2.setTag(null);
         list2.add(ch2);
+
 
         WhatdoListChild ch3 = new WhatdoListChild();
         ch3.setName("Eat Food");

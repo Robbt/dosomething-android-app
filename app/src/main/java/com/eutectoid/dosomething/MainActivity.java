@@ -13,6 +13,8 @@ import com.facebook.CallbackManager;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 
+import java.util.List;
+
 /**
  * Created by robbt on 3/20/16.
  */
@@ -31,6 +33,13 @@ public class MainActivity extends FragmentActivity {
     private AccessTokenTracker accessTokenTracker;
     private CallbackManager callbackManager;
 
+
+    public void AddActiveUser(String activity) {
+        ((DoSomethingApplication) this.getApplication())
+                .addActiveUser(activity);    }
+    public interface IMethodCaller{
+        void AddActiveUser();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

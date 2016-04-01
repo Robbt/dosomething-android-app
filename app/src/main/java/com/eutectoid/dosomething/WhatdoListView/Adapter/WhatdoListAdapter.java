@@ -5,8 +5,13 @@ package com.eutectoid.dosomething.WhatdoListView.Adapter;
  */
 //http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
 import java.util.ArrayList;
+import java.util.List;
 
+import com.eutectoid.dosomething.DoSomethingApplication;
+import com.eutectoid.dosomething.MainActivity;
 import com.eutectoid.dosomething.R;
+import com.eutectoid.dosomething.SomethingFragment;
+import com.eutectoid.dosomething.User;
 import com.eutectoid.dosomething.WhatdoListChild;
 import com.eutectoid.dosomething.WhatdoListGroup;
 
@@ -58,15 +63,18 @@ public class WhatdoListAdapter extends BaseExpandableListAdapter {
             view = infInflater.inflate(R.layout.whatdolist_child_item, null);
         }
 
-        Button b = (Button)view.findViewById(R.id.bChild);
+        final Button b = (Button)view.findViewById(R.id.bChild);
         b.setText(child.getName());
         b.setTag(child.getTag());
 
         b.setOnClickListener(new Button.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                // TODO add button functionality - call method that creates user Object and submits it
-                // TODO make code to replace list with Button that replaces the WhatdoList with a Button listing the activity
-
+                if(context instanceof MainActivity) {
+                    ((MainActivity) context).AddActiveUser(b.getText().toString());
+                    // TODO add button functionality - call method that creates user Object and submits it http://stackoverflow.com/questions/12142255/call-activity-method-from-adapter
+                    // TODO make code to replace list with Button that replaces the WhatdoList with a Button listing the activity
+                }
 
             }
         });
