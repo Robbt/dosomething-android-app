@@ -194,15 +194,13 @@ public class SomethingFragment extends Fragment {
         shareButton.setFragment(this);
 
         /* Adding DoSomething Button */
-/*        Button doButton = (Button) view.findViewById(R.id.do_button);
+        Button doButton = (Button) view.findViewById(R.id.do_button);
         doButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showWhatDoFragment();
             }
         });
-*/
-        showWhatDoFragment();
 
         //TODO Add show FriendsList Function and Fragment FriendsListFragment
 
