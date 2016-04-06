@@ -21,6 +21,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.internal.AnalyticsEvents;
+import com.facebook.share.widget.SendButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -53,8 +54,9 @@ public class FriendsListFragment extends Fragment {
     }
 
     private void updateUI() {
+        // TODO get it woking with getActiveUsers
         List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
-                .getActiveUsers();
+                .getFacebookFriends();
                 mAdapter = new FriendAdapter(FacebookFriends);
                 mFacebookFriendsRecyclerView.setAdapter(mAdapter);
 
@@ -69,6 +71,7 @@ public class FriendsListFragment extends Fragment {
 
         public FriendHolder(View itemView) {
             super(itemView);
+            //SendButton button = (SendButton)itemView.findViewById(R.id.list_item_message_friend);
             mFriendName = (TextView) itemView.findViewById(R.id.list_item_friend_name_text_view);
             mFriendActivity = (TextView) itemView.findViewById(R.id.list_item_friend_activity_text_view);
         }

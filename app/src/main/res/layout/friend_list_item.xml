@@ -12,9 +12,15 @@
         android:layout_alignParentEnd="true"
         android:padding="4dp"
         />
+    <!--com.facebook.share.widget.SendButton
+        android:id="@+id/list_item_message_friend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="5dp"/-->
     <TextView
         android:id="@+id/list_item_friend_name_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/list_item_message_friend"
         android:textStyle="bold"
@@ -23,13 +29,14 @@
         />
     <TextView
         android:id="@+id/list_item_friend_activity_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/list_item_message_friend"
         android:layout_below="@id/list_item_friend_name_text_view"
         android:padding="4dp"
         tools:text="Todo Activity"
         />
+
 
 
 </RelativeLayout>
