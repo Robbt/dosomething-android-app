@@ -36,7 +36,11 @@
         android:padding="4dp"
         tools:text="Todo Activity"
         />
-
-
-
+    <ImageView
+        android:id="@+id/list_item_friend_photo"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        />
 </RelativeLayout>
