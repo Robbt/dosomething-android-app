@@ -115,6 +115,16 @@ public class fetchImage {
             mFriendName = (TextView) itemView.findViewById(R.id.list_item_friend_name_text_view);
             mFriendActivity = (TextView) itemView.findViewById(R.id.list_item_friend_activity_text_view);
             mProfilePhoto = (ImageView) itemView.findViewById(R.id.list_item_friend_photo);
+        }
+        public void bindBitmap(Bitmap bitmap) {
+
+            mProfilePhoto.setImageBitmap(bitmap);
+        }
+
+        public void bindFriend(User user) {
+            mFriend = user;
+            mFriendName.setText(user.getUsername());
+            mFriendActivity.setText(user.getActivity());
             class GetFacebookProfilePhoto extends AsyncTask<String, Integer, Bitmap> {
                 protected Bitmap doInBackground(String... params) {
                     return new fetchImage().get(params[0]);
@@ -127,16 +137,7 @@ public class fetchImage {
             String mProfilePhotoURL = "https://graph.facebook.com/" + mFriend.getFacebookid() + "/picture?type=large";
             new GetFacebookProfilePhoto().execute(mProfilePhotoURL);
         }
-        public void bindBitmap(Bitmap bitmap) {
 
-            mProfilePhoto.setImageBitmap(bitmap);
-        }
-
-        public void bindFriend(User user) {
-            mFriend = user;
-            mFriendName.setText(user.getUsername());
-            mFriendActivity.setText(user.getActivity());
-        }
     }
 
     private class FriendAdapter extends RecyclerView.Adapter<FriendHolder> {
@@ -149,7 +150,7 @@ public class fetchImage {
         @Override
         public FriendHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(R.layout.friend_list_item,parent, false);
+            View view = layoutInflater.inflate(R.layout.friend_list_item, parent, false);
             return new FriendHolder(view);
         }
         @Override
