@@ -2,6 +2,7 @@ package com.eutectoid.dosomething;
 
 import android.app.Application;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.facebook.AccessToken;
@@ -35,7 +36,20 @@ public class DoSomethingApplication extends Application{
     private String userId;
     private List<User> activeUsers;
     private ArrayList<User> facebookFriends = new ArrayList<>();
+    /* Used to store the set of facebook friends for determining which active users are inside of it. */
     private Set<String> FriendsSet = new HashSet<String>();
+    /* This use is used to store the user profile from Facebook itself */
+    private JSONObject user;
+
+    private static final String NAME = "name";
+    private static final String ID = "id";
+    private static final String PICTURE = "picture";
+
+    private static final String FIELDS = "fields";
+
+    private static final String REQUEST_FIELDS =
+            TextUtils.join(",", new String[]{ID, NAME, PICTURE});
+
 
     @Override
         public void onCreate() {
@@ -56,11 +70,11 @@ public class DoSomethingApplication extends Application{
         refActive.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                Set<String> addedFriends = new HashSet<String>();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     User activeUser = postSnapshot.getValue(User.class);
 
-                    Set<String> addedFriends = new HashSet<String>();
-                    if ( !(addedFriends.contains(activeUser.getFacebookid())) && (friends.contains(activeUser.getFacebookid()))) {
+                    if (!(addedFriends.contains(activeUser.getFacebookid())) && (friends.contains(activeUser.getFacebookid()))) {
                         addedFriends.add(activeUser.getFacebookid());
                         activeUsers.add(activeUser);
                     }
@@ -74,25 +88,50 @@ public class DoSomethingApplication extends Application{
         });
         return activeUsers;
     }
+
+
+    public void fetchUserIDaddUser(final String activity) {
+        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken != null) {
+            GraphRequest request = GraphRequest.newMeRequest(
+                    accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject me, GraphResponse response) {
+                            user = me;
+                            String userID = accessToken.getUserId();
+
+                            String username = user.optString("name");
+                            User myUser = new User(userID);
+                            myUser.setUsername(username);
+                            myUser.setIsactive(true);
+                            myUser.setActivity(activity);
+                            //TODO move this into another AsyncTask that checks for existing User or utilizes a cache
+                            String FIREBASE_DB = BuildConfig.FIREBASE_DB;
+                            Firebase refActive = new Firebase(FIREBASE_DB);
+                            Firebase newUser = refActive.push();
+                            Map<String, String> myUserDB = new HashMap<String, String>();
+                            myUserDB.put("facebookid", myUser.getFacebookid());
+                            myUserDB.put("username", myUser.getUsername());
+                            myUserDB.put("activity", myUser.getActivity());
+                            myUserDB.put("isactive", myUser.getIsActive().toString());
+                            refActive.push().setValue(myUserDB);
+                        }
+                    });
+            Bundle parameters = new Bundle();
+            parameters.putString(FIELDS, REQUEST_FIELDS);
+            request.setParameters(parameters);
+            GraphRequest.executeBatchAsync(request);
+        } else {
+            user = null;
+        }
+    }
+
+
+
     public void addActiveUser(String activity) {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         if (accessToken != null) {
-            String userID = accessToken.getUserId();
-            String username = "Robbt E";
-            // TODO encode lookup of user name from facebook
-            User myUser = new User(userID);
-            myUser.setUsername(username);
-            myUser.setIsactive(true);
-            myUser.setActivity(activity);
-            String FIREBASE_DB = BuildConfig.FIREBASE_DB;
-            Firebase refActive = new Firebase(FIREBASE_DB);
-            Firebase newUser = refActive.push();
-            Map<String, String> myUserDB = new HashMap<String, String>();
-            myUserDB.put("facebookid", myUser.getFacebookid());
-            myUserDB.put("username", myUser.getUsername());
-            myUserDB.put("activity", myUser.getActivity());
-            myUserDB.put("isactive", myUser.getIsActive().toString());
-            refActive.push().setValue(myUserDB);
+            fetchUserIDaddUser(activity);
         }
     }
     public Set<String> getFacebookFriendsSet() {
