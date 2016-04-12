@@ -21,8 +21,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -33,6 +35,7 @@ public class DoSomethingApplication extends Application{
     private String userId;
     private List<User> activeUsers;
     private ArrayList<User> facebookFriends = new ArrayList<>();
+    private Set<String> FriendsSet = new HashSet<String>();
 
     @Override
         public void onCreate() {
@@ -43,7 +46,7 @@ public class DoSomethingApplication extends Application{
         }
 
     // This method queries the firebase and inserts all of the entries into the listener.
-    public List<User> getActiveUsers() {
+    public List<User> getActiveUsers(final Set<String> friends) {
         // TODO - need to fix the sample user
         // TODO - add fake facebook users as default ON
         // pull the value from the secrets.properties file so that it doesn't get shared via github
@@ -53,10 +56,14 @@ public class DoSomethingApplication extends Application{
         refActive.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     User activeUser = postSnapshot.getValue(User.class);
-                    activeUsers.add(activeUser);
+
+                    Set<String> addedFriends = new HashSet<String>();
+                    if ( !(addedFriends.contains(activeUser.getFacebookid())) && (friends.contains(activeUser.getFacebookid()))) {
+                        addedFriends.add(activeUser.getFacebookid());
+                        activeUsers.add(activeUser);
+                    }
 
                 }
             }
@@ -88,7 +95,43 @@ public class DoSomethingApplication extends Application{
             refActive.push().setValue(myUserDB);
         }
     }
+    public Set<String> getFacebookFriendsSet() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        String userID = AccessToken.USER_ID_KEY;
 
+        GraphRequest request = GraphRequest.newMyFriendsRequest(
+                accessToken,
+                new GraphRequest.GraphJSONArrayCallback() {
+                    @Override
+                    public void onCompleted(JSONArray object, GraphResponse response) {
+                        if(response.getError() != null) {
+                            Log.d("myTag", "ResponseError:  " + response.getError().getErrorMessage());
+                        }
+                        else {
+                            try {
+                                JSONObject obj = new JSONObject(response.getRawResponse());
+                                JSONArray data = obj.getJSONArray("data");
+                                for(int i = 0; i < data.length(); ++i) {
+                                    // TODO get more info from Facebook
+                                    String FriendID = (data.getJSONObject(i).getString("id"));
+                                    FriendsSet.add(FriendID);
+                                }
+                            }
+                            catch(JSONException e) {
+                                Log.d("myTag", "JSONException: " + e.getMessage());
+                            }
+                        }
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link");
+        request.setParameters(parameters);
+        request.executeAsync();
+        return FriendsSet;
+
+
+
+    }
 
     public List<User> getFacebookFriends() {
         //Log.d("myTag", "Made it into getFacebookFriends()");

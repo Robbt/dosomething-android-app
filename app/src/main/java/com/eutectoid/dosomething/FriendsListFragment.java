@@ -90,8 +90,9 @@ public class fetchImage {
 
     private void updateUI() {
         // TODO get it woking with getActiveUsers
+        Set<String> FriendsSet = ((DoSomethingApplication) getActivity().getApplication()).getFacebookFriendsSet();
         List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
-                .getFacebookFriends();
+                .getActiveUsers(FriendsSet);
                 mAdapter = new FriendAdapter(FacebookFriends);
                 mFacebookFriendsRecyclerView.setAdapter(mAdapter);
 
