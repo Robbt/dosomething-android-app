@@ -49,6 +49,7 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_margin="10dp"
+        android:layout_toRightOf="@id/list_item_friend_photo"
         android:layout_below="@id/list_item_friend_activity_text_view"
         />
 </RelativeLayout>
