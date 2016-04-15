@@ -32,6 +32,9 @@ import com.facebook.share.widget.SendButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import com.facebook.messenger.MessengerUtils;
+import com.facebook.messenger.MessengerThreadParams;
+import com.facebook.messenger.ShareToMessengerParams;
 
 import java.io.IOException;
 import java.io.InputStream;
