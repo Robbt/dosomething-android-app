@@ -89,6 +89,45 @@ public class DoSomethingApplication extends Application{
         return activeUsers;
     }
 
+    public void addUserFireBase(final User myUser) {
+        //first check to see if the user exists in the Database
+        String FIREBASE_DB = BuildConfig.FIREBASE_DB;
+        final Firebase refActive = new Firebase(FIREBASE_DB);
+        String key = new String();
+        final Map<String, String> myUserDB = new HashMap<String, String>();
+        myUserDB.put("facebookid", myUser.getFacebookid());
+        myUserDB.put("username", myUser.getUsername());
+        myUserDB.put("activity", myUser.getActivity());
+        myUserDB.put("isactive", myUser.getIsActive().toString());
+        refActive.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String key = new String();
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    User activeUser = postSnapshot.getValue(User.class);
+                    if ( activeUser.getFacebookid().equals(myUser.getFacebookid()) ) {
+                        key = postSnapshot.getKey();
+                        break;
+                    }
+                    }
+                if (key.isEmpty()) {
+                    Firebase newUser = refActive.push();
+                    refActive.push().setValue(myUserDB);
+                }
+                else {
+                    Firebase updateUser = refActive.child(key);
+                    updateUser.setValue(myUserDB);
+                }
+                }
+
+
+                 @Override
+                 public void onCancelled(FirebaseError firebaseError) {
+                 }
+             });
+
+    }
+
 
     public void fetchUserIDaddUser(final String activity) {
         final AccessToken accessToken = AccessToken.getCurrentAccessToken();
@@ -105,6 +144,7 @@ public class DoSomethingApplication extends Application{
                             myUser.setUsername(username);
                             myUser.setIsactive(true);
                             myUser.setActivity(activity);
+                            /*
                             //TODO move this into another AsyncTask that checks for existing User or utilizes a cache
                             String FIREBASE_DB = BuildConfig.FIREBASE_DB;
                             Firebase refActive = new Firebase(FIREBASE_DB);
@@ -114,7 +154,8 @@ public class DoSomethingApplication extends Application{
                             myUserDB.put("username", myUser.getUsername());
                             myUserDB.put("activity", myUser.getActivity());
                             myUserDB.put("isactive", myUser.getIsActive().toString());
-                            refActive.push().setValue(myUserDB);
+                            refActive.push().setValue(myUserDB); */
+                            addUserFireBase(myUser);
                         }
                     });
             Bundle parameters = new Bundle();

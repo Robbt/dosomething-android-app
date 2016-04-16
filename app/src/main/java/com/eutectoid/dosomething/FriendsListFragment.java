@@ -1,9 +1,12 @@
 package com.eutectoid.dosomething;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -146,6 +150,7 @@ public class fetchImage {
 
     private class FriendAdapter extends RecyclerView.Adapter<FriendHolder> {
         private List<User> mFriends;
+        private View view;
 
         public FriendAdapter(List<User> friends) {
             mFriends = friends;
@@ -154,13 +159,27 @@ public class fetchImage {
         @Override
         public FriendHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(R.layout.friend_list_item, parent, false);
+            view = layoutInflater.inflate(R.layout.friend_list_item, parent, false);
             return new FriendHolder(view);
         }
         @Override
         public void onBindViewHolder(FriendHolder holder, int position) {
-            User user = mFriends.get(position);
+            final User user = mFriends.get(position);
             holder.bindFriend(user);
+            // TODO test messenger button
+            final Button b = (Button)view.findViewById(R.id.messenger_send_button);
+
+            b.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri uri = Uri.parse("fb-messenger://user/");
+                    uri = ContentUris.withAppendedId(uri,Long.parseLong(user.getFacebookid()));
+                    Log.d("myTag", uri.toString());
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+            });
         }
         @Override
         public int getItemCount() {
