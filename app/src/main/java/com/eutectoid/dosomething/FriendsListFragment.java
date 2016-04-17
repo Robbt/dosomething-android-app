@@ -90,7 +90,13 @@ public class FriendsListFragment extends Fragment {
         return view;
     }
 
+    public Long idToLong(User u) {
+        String id = u.getFacebookid();
+        return Long.parseLong(id);
+    }
 
+
+<<<<<<< HEAD
 public class fetchImage {
     public Bitmap get(String urlstr) {
         try {
@@ -129,10 +135,29 @@ public class fetchImage {
             Log.d("RemoteImageHandler", "fetchImage passed invalid URL: " + urlstr);
         } catch (IOException e) {
             Log.d("RemoteImageHandler", "fetchImage IO exception: " + e);
+=======
+    public class fetchImage {
+        public Bitmap get(String urlstr) {
+            try {
+                URL url;
+                url = new URL(urlstr);
+
+                HttpURLConnection c = (HttpURLConnection) url.openConnection();
+                c.setDoInput(true);
+                c.connect();
+                InputStream is = c.getInputStream();
+                Bitmap img;
+                img = BitmapFactory.decodeStream(is);
+                return img;
+            } catch (MalformedURLException e) {
+                Log.d("RemoteImageHandler", "fetchImage passed invalid URL: " + urlstr);
+            } catch (IOException e) {
+                Log.d("RemoteImageHandler", "fetchImage IO exception: " + e);
+            }
+            return null;
+>>>>>>> 0413fcf87943704ece6913f90460d3caf9bf3148
         }
-        return null;
     }
-}
 
     public void updateUI() {
         //Set<String> FriendsSet = ((DoSomethingApplication) getActivity().getApplication()).getFacebookFriendsSet();
@@ -226,6 +251,7 @@ public class fetchImage {
             view = layoutInflater.inflate(R.layout.friend_list_item, parent, false);
             return new FriendHolder(view);
         }
+
         @Override
         public void onBindViewHolder(FriendHolder holder, int position) {
             final User user = mFriends.get(position);
@@ -237,7 +263,7 @@ public class fetchImage {
                 @Override
                 public void onClick(View v) {
                     Uri uri = Uri.parse("fb-messenger://user/");
-                    uri = ContentUris.withAppendedId(uri,Long.parseLong(user.getFacebookid()));
+                    uri = ContentUris.withAppendedId(uri,idToLong(user));
                     Log.d("myTag", uri.toString());
 
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);

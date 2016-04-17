@@ -87,7 +87,6 @@ public class MainActivity extends FragmentActivity {
 
         FragmentManager fm = getSupportFragmentManager();
         SplashFragment splashFragment = (SplashFragment) fm.findFragmentById(R.id.splashFragment);
-        // TODO add a friends list fragment to display underneath WHATDO,
         fragments[SPLASH] = splashFragment;
         fragments[SELECTION] = fm.findFragmentById(R.id.somethingFragment);
         fragments[SETTINGS] = fm.findFragmentById(R.id.userSettingsFragment);
