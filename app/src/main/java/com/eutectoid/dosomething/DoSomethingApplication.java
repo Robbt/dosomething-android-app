@@ -88,6 +88,35 @@ public class DoSomethingApplication extends Application{
         });
         return activeUsers;
     }
+    public List<User> getActiveUsers() {
+        // TODO - need to fix the sample user
+        // TODO - add fake facebook users as default ON
+        // pull the value from the secrets.properties file so that it doesn't get shared via github
+        String FIREBASE_DB = BuildConfig.FIREBASE_DB;
+        Firebase refActive = new Firebase(FIREBASE_DB);
+        final List<User> activeUsers = new ArrayList<User>();
+        refActive.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Set<String> addedFriends = new HashSet<String>();
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    User activeUser = postSnapshot.getValue(User.class);
+
+                    if (!(addedFriends.contains(activeUser.getFacebookid()))) {
+                        addedFriends.add(activeUser.getFacebookid());
+                        activeUsers.add(activeUser);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
+        return activeUsers;
+    }
+
 
     public void addUserFireBase(final User myUser) {
         //first check to see if the user exists in the Database

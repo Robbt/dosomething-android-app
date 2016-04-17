@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,11 +41,15 @@ import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.MessengerThreadParams;
 import com.facebook.messenger.ShareToMessengerParams;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -61,13 +66,26 @@ public class FriendsListFragment extends Fragment {
     private static final String NAME = "name";
     private String userId;
     private FriendAdapter mAdapter;
+    private Set<String> FriendsSet = new HashSet<String>();
+    private List<User> FacebookFriends = new ArrayList<User>();
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.friendlist_fragment, container, false);
         mFacebookFriendsRecyclerView = (RecyclerView) view.findViewById(R.id.friend_recycler_view);
-        mFacebookFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+            mFacebookFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    // need to combine these into a single method
+
+
+    if (FriendsSet.isEmpty()) {
+        FriendsSet = ((DoSomethingApplication) getActivity().getApplication()).getFacebookFriendsSet();
+    }
+        if (FacebookFriends.isEmpty()) {
+            FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
+                    .getActiveUsers();
+        }
         updateUI();
         return view;
     }
@@ -85,6 +103,27 @@ public class fetchImage {
             InputStream is = c.getInputStream();
             Bitmap img;
             img = BitmapFactory.decodeStream(is);
+            String path = Environment.getDownloadCacheDirectory().getAbsolutePath();
+            FileOutputStream out = null;
+            try {
+                String filename = urlstr.substring(27,42);
+                //File file = new File(path, filename+".jpg");
+                //file.createNewFile();
+                out = getContext().openFileOutput(filename + ".jpg", Context.MODE_PRIVATE);
+                img.compress(Bitmap.CompressFormat.JPEG, 85, out);
+            }
+             catch (Exception e) {
+                 e.printStackTrace();
+             }
+            finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             return img;
         } catch (MalformedURLException e) {
             Log.d("RemoteImageHandler", "fetchImage passed invalid URL: " + urlstr);
@@ -95,13 +134,14 @@ public class fetchImage {
     }
 }
 
-    private void updateUI() {
-        // TODO get it woking with getActiveUsers
-        Set<String> FriendsSet = ((DoSomethingApplication) getActivity().getApplication()).getFacebookFriendsSet();
-        List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
-                .getActiveUsers(FriendsSet);
+    public void updateUI() {
+        //Set<String> FriendsSet = ((DoSomethingApplication) getActivity().getApplication()).getFacebookFriendsSet();
+        //List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
+        //        .getActiveUsers(FriendsSet);
+
                 mAdapter = new FriendAdapter(FacebookFriends);
                 mFacebookFriendsRecyclerView.setAdapter(mAdapter);
+
 
     }
 
@@ -135,17 +175,41 @@ public class fetchImage {
             mFriendActivity.setText(user.getActivity());
             class GetFacebookProfilePhoto extends AsyncTask<String, Integer, Bitmap> {
                 protected Bitmap doInBackground(String... params) {
+
                     return new fetchImage().get(params[0]);
+
+
                 }
                 protected void onPostExecute(Bitmap response) {
+
                     mProfilePhoto.setImageBitmap(response);
                 }
 
             }
             String mProfilePhotoURL = "https://graph.facebook.com/" + mFriend.getFacebookid() + "/picture?type=large";
-            new GetFacebookProfilePhoto().execute(mProfilePhotoURL);
+            String filename = mProfilePhotoURL.substring(27,42) + ".jpg";
+            if (hasCachedProfilePhoto(filename)) {
+                String path = Environment.getDownloadCacheDirectory().getAbsolutePath();
+                Bitmap fbphoto = null;
+                try {
+                    File filePath = getContext().getFileStreamPath(filename);
+                    FileInputStream fi = new FileInputStream(filePath);
+                    fbphoto = BitmapFactory.decodeStream(fi);
+                    mProfilePhoto.setImageBitmap(fbphoto);
+                } catch (Exception e) {
+                    Log.e("no get profile photo", e.getMessage());
+                }
+            }
+            else {
+                new GetFacebookProfilePhoto().execute(mProfilePhotoURL);
+            }
         }
 
+    }
+
+    boolean hasCachedProfilePhoto(String profilephoto) {
+        File file = getContext().getFileStreamPath(profilephoto);
+        return file.exists();
     }
 
     private class FriendAdapter extends RecyclerView.Adapter<FriendHolder> {

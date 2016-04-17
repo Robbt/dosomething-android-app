@@ -43,12 +43,18 @@ public class MainActivity extends FragmentActivity {
         // now i need to delete the whatdo list - using this idea http://stackoverflow.com/questions/22474584/remove-old-fragment-from-fragment-manager#22474821
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().findFragmentByTag("WHATDOFRAGMENT");
         if(fragment != null) {
-            getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().beginTransaction().remove(fragment).commit();
+            getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().beginTransaction().replace(fragment.getId(), new FriendsListFragment(), "FRIENDSLIST").commit();
+          //  getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().beginTransaction().remove(fragment).commit();
         }
-        getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().beginTransaction().add(R.id.whatdocontainer, new FriendsListFragment(), "FRIENDSLIST").commit();
+        //Fragment newfragment = getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().findFragmentByTag("FRIENDSLIST");
+        //if (newfragment == null) {
+      //      getSupportFragmentManager().findFragmentById(R.id.somethingFragment).getChildFragmentManager().beginTransaction().add(R.id.whatdocontainer, new FriendsListFragment(), "FRIENDSLIST").commit();
+        //}
+
     }
     public interface IMethodCaller{
         void AddActiveUser();
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,13 +189,13 @@ public class MainActivity extends FragmentActivity {
                 transaction.hide(fragments[i]);
             }
         }
-
-        // TODO move to proper place
+        // I think this code can be deleted as it serves no purpose.
+      /*  // TODO move to proper place
         if(fragmentIndex == SELECTION) {
             DoSomethingApplication app = (DoSomethingApplication) getApplication();
             app.getFacebookFriends();
         }
-
+*/
         if (addToBackStack) {
             transaction.addToBackStack(null);
         }
