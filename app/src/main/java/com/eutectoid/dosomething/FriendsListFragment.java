@@ -96,7 +96,6 @@ public class FriendsListFragment extends Fragment {
     }
 
 
-<<<<<<< HEAD
 public class fetchImage {
     public Bitmap get(String urlstr) {
         try {
@@ -112,16 +111,14 @@ public class fetchImage {
             String path = Environment.getDownloadCacheDirectory().getAbsolutePath();
             FileOutputStream out = null;
             try {
-                String filename = urlstr.substring(27,42);
+                String filename = urlstr.substring(27, 42);
                 //File file = new File(path, filename+".jpg");
                 //file.createNewFile();
                 out = getContext().openFileOutput(filename + ".jpg", Context.MODE_PRIVATE);
                 img.compress(Bitmap.CompressFormat.JPEG, 85, out);
-            }
-             catch (Exception e) {
-                 e.printStackTrace();
-             }
-            finally {
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
                 try {
                     if (out != null) {
                         out.close();
@@ -135,146 +132,130 @@ public class fetchImage {
             Log.d("RemoteImageHandler", "fetchImage passed invalid URL: " + urlstr);
         } catch (IOException e) {
             Log.d("RemoteImageHandler", "fetchImage IO exception: " + e);
-=======
-    public class fetchImage {
-        public Bitmap get(String urlstr) {
-            try {
-                URL url;
-                url = new URL(urlstr);
-
-                HttpURLConnection c = (HttpURLConnection) url.openConnection();
-                c.setDoInput(true);
-                c.connect();
-                InputStream is = c.getInputStream();
-                Bitmap img;
-                img = BitmapFactory.decodeStream(is);
-                return img;
-            } catch (MalformedURLException e) {
-                Log.d("RemoteImageHandler", "fetchImage passed invalid URL: " + urlstr);
-            } catch (IOException e) {
-                Log.d("RemoteImageHandler", "fetchImage IO exception: " + e);
-            }
-            return null;
->>>>>>> 0413fcf87943704ece6913f90460d3caf9bf3148
         }
+        return null;
     }
-
-    public void updateUI() {
-        //Set<String> FriendsSet = ((DoSomethingApplication) getActivity().getApplication()).getFacebookFriendsSet();
-        //List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
-        //        .getActiveUsers(FriendsSet);
-
-                mAdapter = new FriendAdapter(FacebookFriends);
-                mFacebookFriendsRecyclerView.setAdapter(mAdapter);
-
-
-    }
-
-    private FetchPhotoTask.OnTaskCompleted listener = new FetchPhotoTask.OnTaskCompleted() {
-        public void onTaskCompleted() {
-        }
-    };
-    private class FriendHolder extends RecyclerView.ViewHolder {
-        private User mFriend;
-
-        private TextView mFriendName;
-        private TextView mFriendActivity;
-        private ImageView mProfilePhoto;
-
-
-        public FriendHolder(View itemView) {
-            super(itemView);
-            //SendButton button = (SendButton)itemView.findViewById(R.id.list_item_message_friend);
-            mFriendName = (TextView) itemView.findViewById(R.id.list_item_friend_name_text_view);
-            mFriendActivity = (TextView) itemView.findViewById(R.id.list_item_friend_activity_text_view);
-            mProfilePhoto = (ImageView) itemView.findViewById(R.id.list_item_friend_photo);
-        }
-        public void bindBitmap(Bitmap bitmap) {
-
-            mProfilePhoto.setImageBitmap(bitmap);
-        }
-
-        public void bindFriend(User user) {
-            mFriend = user;
-            mFriendName.setText(user.getUsername());
-            mFriendActivity.setText(user.getActivity());
-            class GetFacebookProfilePhoto extends AsyncTask<String, Integer, Bitmap> {
-                protected Bitmap doInBackground(String... params) {
-
-                    return new fetchImage().get(params[0]);
-
-
-                }
-                protected void onPostExecute(Bitmap response) {
-
-                    mProfilePhoto.setImageBitmap(response);
-                }
-
-            }
-            String mProfilePhotoURL = "https://graph.facebook.com/" + mFriend.getFacebookid() + "/picture?type=large";
-            String filename = mProfilePhotoURL.substring(27,42) + ".jpg";
-            if (hasCachedProfilePhoto(filename)) {
-                String path = Environment.getDownloadCacheDirectory().getAbsolutePath();
-                Bitmap fbphoto = null;
-                try {
-                    File filePath = getContext().getFileStreamPath(filename);
-                    FileInputStream fi = new FileInputStream(filePath);
-                    fbphoto = BitmapFactory.decodeStream(fi);
-                    mProfilePhoto.setImageBitmap(fbphoto);
-                } catch (Exception e) {
-                    Log.e("no get profile photo", e.getMessage());
-                }
-            }
-            else {
-                new GetFacebookProfilePhoto().execute(mProfilePhotoURL);
-            }
-        }
-
-    }
-
-    boolean hasCachedProfilePhoto(String profilephoto) {
-        File file = getContext().getFileStreamPath(profilephoto);
-        return file.exists();
-    }
-
-    private class FriendAdapter extends RecyclerView.Adapter<FriendHolder> {
-        private List<User> mFriends;
-        private View view;
-
-        public FriendAdapter(List<User> friends) {
-            mFriends = friends;
-
-        }
-        @Override
-        public FriendHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            view = layoutInflater.inflate(R.layout.friend_list_item, parent, false);
-            return new FriendHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(FriendHolder holder, int position) {
-            final User user = mFriends.get(position);
-            holder.bindFriend(user);
-            // TODO test messenger button
-            final Button b = (Button)view.findViewById(R.id.messenger_send_button);
-
-            b.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Uri uri = Uri.parse("fb-messenger://user/");
-                    uri = ContentUris.withAppendedId(uri,idToLong(user));
-                    Log.d("myTag", uri.toString());
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                }
-            });
-        }
-        @Override
-        public int getItemCount() {
-            return mFriends.size();
-        }
-    }
-
 }
+
+        public void updateUI() {
+            //Set<String> FriendsSet = ((DoSomethingApplication) getActivity().getApplication()).getFacebookFriendsSet();
+            //List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
+            //        .getActiveUsers(FriendsSet);
+
+            mAdapter = new FriendAdapter(FacebookFriends);
+            mFacebookFriendsRecyclerView.setAdapter(mAdapter);
+
+
+        }
+
+        private FetchPhotoTask.OnTaskCompleted listener = new FetchPhotoTask.OnTaskCompleted() {
+            public void onTaskCompleted() {
+            }
+        };
+        private class FriendHolder extends RecyclerView.ViewHolder {
+            private User mFriend;
+
+            private TextView mFriendName;
+            private TextView mFriendActivity;
+            private ImageView mProfilePhoto;
+
+
+            public FriendHolder(View itemView) {
+                super(itemView);
+                //SendButton button = (SendButton)itemView.findViewById(R.id.list_item_message_friend);
+                mFriendName = (TextView) itemView.findViewById(R.id.list_item_friend_name_text_view);
+                mFriendActivity = (TextView) itemView.findViewById(R.id.list_item_friend_activity_text_view);
+                mProfilePhoto = (ImageView) itemView.findViewById(R.id.list_item_friend_photo);
+            }
+
+            public void bindBitmap(Bitmap bitmap) {
+
+                mProfilePhoto.setImageBitmap(bitmap);
+            }
+
+            public void bindFriend(User user) {
+                mFriend = user;
+                mFriendName.setText(user.getUsername());
+                mFriendActivity.setText(user.getActivity());
+                class GetFacebookProfilePhoto extends AsyncTask<String, Integer, Bitmap> {
+                    protected Bitmap doInBackground(String... params) {
+
+                        return new fetchImage().get(params[0]);
+
+
+                    }
+
+                    protected void onPostExecute(Bitmap response) {
+
+                        mProfilePhoto.setImageBitmap(response);
+                    }
+
+                }
+                String mProfilePhotoURL = "https://graph.facebook.com/" + mFriend.getFacebookid() + "/picture?type=large";
+                String filename = mProfilePhotoURL.substring(27, 42) + ".jpg";
+                if (hasCachedProfilePhoto(filename)) {
+                    String path = Environment.getDownloadCacheDirectory().getAbsolutePath();
+                    Bitmap fbphoto = null;
+                    try {
+                        File filePath = getContext().getFileStreamPath(filename);
+                        FileInputStream fi = new FileInputStream(filePath);
+                        fbphoto = BitmapFactory.decodeStream(fi);
+                        mProfilePhoto.setImageBitmap(fbphoto);
+                    } catch (Exception e) {
+                        Log.e("no get profile photo", e.getMessage());
+                    }
+                } else {
+                    new GetFacebookProfilePhoto().execute(mProfilePhotoURL);
+                }
+            }
+
+        }
+
+        boolean hasCachedProfilePhoto (String profilephoto){
+            File file = getContext().getFileStreamPath(profilephoto);
+            return file.exists();
+        }
+
+        private class FriendAdapter extends RecyclerView.Adapter<FriendHolder> {
+            private List<User> mFriends;
+            private View view;
+
+            public FriendAdapter(List<User> friends) {
+                mFriends = friends;
+
+            }
+
+            @Override
+            public FriendHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+                view = layoutInflater.inflate(R.layout.friend_list_item, parent, false);
+                return new FriendHolder(view);
+            }
+
+            @Override
+            public void onBindViewHolder(FriendHolder holder, int position) {
+                final User user = mFriends.get(position);
+                holder.bindFriend(user);
+                // TODO test messenger button
+                final Button b = (Button) view.findViewById(R.id.messenger_send_button);
+
+                b.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse("fb-messenger://user/");
+                        uri = ContentUris.withAppendedId(uri, idToLong(user));
+                        Log.d("myTag", uri.toString());
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }
+                });
+            }
+
+            @Override
+            public int getItemCount() {
+                return mFriends.size();
+            }
+        }
+
+        }
