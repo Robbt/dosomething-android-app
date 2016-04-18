@@ -27,7 +27,7 @@ import android.widget.TextView;
 public class WhatdoListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<WhatdoListGroup> groups;
-    private static String myActivity;
+    private String myActivity;
     public WhatdoListAdapter(Context c, ArrayList<WhatdoListGroup> g) {
         this.context = c;
         this.groups = g;
@@ -121,6 +121,4 @@ public class WhatdoListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int arg0, int arg1) {
         return true;
     }
-
-    public static String getMyActivity() { return myActivity; }
 }
