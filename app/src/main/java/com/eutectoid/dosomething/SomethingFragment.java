@@ -125,11 +125,25 @@ public class SomethingFragment extends Fragment {
                     processDialogResults(result.getPostId(), false);
                 }
             };
-    public void showWhatDoFragment() {
-        Fragment whatdoListFragment = new WhatdoListFragment();
-        FragmentTransaction newtransaction = getChildFragmentManager().beginTransaction();
-        newtransaction.add(R.id.whatdocontainer, whatdoListFragment,"WHATDOFRAGMENT");
-        newtransaction.commit();
+    public void toggleWhatDoFragment() {
+        // TODO fix: findFragmentByTag/findFragmentById always returns null
+        //Fragment whatdoListFragment = getFragmentManager().findFragmentById(R.id.whatdocontainer);
+        Fragment whatdoListFragment = getFragmentManager().findFragmentByTag("WHATDOFRAGMENT");
+        if (whatdoListFragment == null || !whatdoListFragment.isVisible()) {
+            Log.d("myTag", "Fragment is null");
+            whatdoListFragment = new WhatdoListFragment();
+
+            FragmentTransaction newtransaction = getChildFragmentManager().beginTransaction();
+            newtransaction.add(R.id.whatdocontainer, whatdoListFragment, "WHATDOFRAGMENT");
+            newtransaction.commit();
+            getFragmentManager().executePendingTransactions();
+        }
+        else {
+            if (whatdoListFragment != null && whatdoListFragment.isVisible()) {
+                Log.d("myTag", "whatdoFragment removed??");
+                whatdoListFragment.getActivity().getFragmentManager().popBackStack();
+            }
+        }
     }
 
     @Override
@@ -198,7 +212,7 @@ public class SomethingFragment extends Fragment {
         doButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showWhatDoFragment();
+                toggleWhatDoFragment();
             }
         });
 
