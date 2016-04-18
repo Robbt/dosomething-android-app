@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -75,18 +76,24 @@ public class FriendsListFragment extends Fragment {
         View view = inflater.inflate(R.layout.friendlist_fragment, container, false);
         mFacebookFriendsRecyclerView = (RecyclerView) view.findViewById(R.id.friend_recycler_view);
 
-            mFacebookFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    // need to combine these into a single method
+        mFacebookFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // need to combine these into a single method
 
 
-    if (FriendsSet.isEmpty()) {
-        FriendsSet = ((DoSomethingApplication) getActivity().getApplication()).getFacebookFriendsSet();
-    }
+        if (FriendsSet.isEmpty()) {
+            FriendsSet = ((DoSomethingApplication) getActivity().getApplication()).getFacebookFriendsSet();
+        }
         if (FacebookFriends.isEmpty()) {
             FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
                     .getActiveUsers();
         }
-        updateUI();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                updateUI();
+            }
+        }, 1000);
         return view;
     }
 
@@ -257,5 +264,4 @@ public class fetchImage {
                 return mFriends.size();
             }
         }
-
-        }
+}

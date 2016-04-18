@@ -1,3 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\TJ\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-annotations\2.2.2\285cb9c666f0f0f3dd8a1be04e1f457eb7b15113\jackson-annotations-2.2.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="285cb9c666f0f0f3dd8a1be04e1f457eb7b15113">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\jackson-annotations-2.2.2_e48d901a257d3b642e39ff7a2c9c4eaf257b48e5.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\.gradle\caches\modules-2\files-2.1\com.firebase\firebase-client-jvm\2.5.2\91731b8f5868a3e8a8a773f29b8d06b5c358f5bb\firebase-client-jvm-2.5.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="91731b8f5868a3e8a8a773f29b8d06b5c358f5bb">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\firebase-client-jvm-2.5.2_c866bfb83f3853efb4f88d9336daba497f4ffe56.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\exploded-aar\com.android.support\customtabs\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="0e5a66a941515d873a34065fe44fbba6ef422a1b">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\com.android.support-customtabs-23.2.1_d3bd6bde6f8684cb8a4b00d94f4f55e4918bb761.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.0.0-alpha1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="9aaaea3a89040f8176f810c85e288fc74d5d1f12">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-24.0.0-alpha1_a14062aa423f7ecb79b948a3f20de6b2c9d2b080.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.0.0-alpha1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="1f1c7067e22acf05bddbca9f94422050cd848a86">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-24.0.0-alpha1_b56c03ba5d9b302b99a5da085aaaa4068ebae1e1.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-applinks\1.4.0\8ad21bf21784dacce5f2043afb97218cc377e835\bolts-applinks-1.4.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\bolts-applinks-1.4.0_ca5a71172303dd669a5f1b624951f8d6abcc5ef8.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.4.0\d85884acf6810a3bbbecb587f239005cbc846dc4\bolts-tasks-1.4.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\bolts-tasks-1.4.0_5be5948be0dbf891459553e644cc5158b5c00622.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.0.0-alpha1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a6af5beedc2e8c946abc3771525e2fed77439309">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-24.0.0-alpha1_ecc27bc87a8014cb90e7c433493b90ddc4546755.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\.gradle\caches\modules-2\files-2.1\com.firebase\tubesock\0.0.12\6ec0bbd3e161a73ed672284b587fd32309a86d7a\tubesock-0.0.12.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6ec0bbd3e161a73ed672284b587fd32309a86d7a">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\tubesock-0.0.12_c0928612532a6288e6eed66826b6f909aa196728.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="cb86970df0f0f25f766d320b279c7858c1ca0003">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-23.2.1_14c333b85fdfca15c17b1ade8072cb8a4816d426.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.0.0-alpha1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="9684c95278dc45a142d7de3db9e7e39aa520e1e0">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-24.0.0-alpha1_0feef027b672ba472cd5abc7f5ec843a45349060.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.2.2\d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b\jackson-core-2.2.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\jackson-core-2.2.2_02c75ea6f4421fdd6bb051fd46b361d084a2e157.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.0.0-alpha1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ed88e1f0c8fbf66e1da918545f0a6790f893bceb">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-24.0.0-alpha1_15c52ed05b2798c32692b351b5751e9cb686b2d8.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.0.0-alpha1\support-annotations-24.0.0-alpha1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="b8062546971a3d196343232a19a3c0016272ba47">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\support-annotations-24.0.0-alpha1_3e4519b3fe53ebe9c05f658a64bed26d2f55c487.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-databind\2.2.2\3c8f6018eaa72d43b261181e801e6f8676c16ef6\jackson-databind-2.2.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3c8f6018eaa72d43b261181e801e6f8676c16ef6">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\jackson-databind-2.2.2_e17269a09eeaa9f5cdd411006df3d7b27985c482.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.11.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="86da97c30f50a67ddabe2cf7040713ad17153fce">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\com.facebook.android-facebook-android-sdk-4.11.0_c840f8f9f997f954fc1352f59a2c427d29cf3cc1.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\exploded-aar\com.android.support\design\24.0.0-alpha1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="cd688796dadc28f7f95db229cbfdaf91ebbb0d61">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\com.android.support-design-24.0.0-alpha1_1e31537658a06c4dea04f1ddeb2b3e837e434102.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.0.0-alpha1\jars\libs\internal_impl-24.0.0-alpha1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e57fba0a2d57d3501d8f4ff44c23092978804845">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\internal_impl-24.0.0-alpha1_e062811530c0b22e6cfcad60a25c5cea248304d5.jar" />
+    </item>
+    <item
+        jar="C:\Users\TJ\.gradle\caches\modules-2\files-2.1\com.firebase\firebase-client-android\2.5.2\f19f10d6276aa0b380e2d05d2ab3272d693a5433\firebase-client-android-2.5.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="f19f10d6276aa0b380e2d05d2ab3272d693a5433">
+        <dex dex="C:\Users\TJ\Documents\dosomething\dosomething-android-app\app\build\intermediates\pre-dexed\debug\firebase-client-android-2.5.2_646df5159525479bf02632566f6e22e489dace42.jar" />
+    </item>
+
+</items>
