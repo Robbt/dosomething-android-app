@@ -33,7 +33,7 @@ import java.util.Set;
  * This custom application is used to pass state data between Activities
  */
 public class DoSomethingApplication extends Application{
-    private String userId;
+    private static User myUserInfo;
     private List<User> activeUsers;
     private ArrayList<User> facebookFriends = new ArrayList<>();
     /* Used to store the set of facebook friends for determining which active users are inside of it. */
@@ -169,10 +169,10 @@ public class DoSomethingApplication extends Application{
                             String userID = accessToken.getUserId();
 
                             String username = user.optString("name");
-                            User myUser = new User(userID);
-                            myUser.setUsername(username);
-                            myUser.setIsactive(true);
-                            myUser.setActivity(activity);
+                            myUserInfo = new User(userID);
+                            myUserInfo.setUsername(username);
+                            myUserInfo.setIsactive(true);
+                            myUserInfo.setActivity(activity);
                             /*
                             //TODO move this into another AsyncTask that checks for existing User or utilizes a cache
                             String FIREBASE_DB = BuildConfig.FIREBASE_DB;
@@ -184,7 +184,7 @@ public class DoSomethingApplication extends Application{
                             myUserDB.put("activity", myUser.getActivity());
                             myUserDB.put("isactive", myUser.getIsActive().toString());
                             refActive.push().setValue(myUserDB); */
-                            addUserFireBase(myUser);
+                            addUserFireBase(myUserInfo);
                         }
                     });
             Bundle parameters = new Bundle();
@@ -311,4 +311,6 @@ public class DoSomethingApplication extends Application{
         }
         return null;
     }
+
+    public static User getMyUserInfo() { return myUserInfo; }
 }

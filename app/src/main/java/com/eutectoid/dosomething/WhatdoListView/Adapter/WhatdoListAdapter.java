@@ -27,6 +27,7 @@ import android.widget.TextView;
 public class WhatdoListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<WhatdoListGroup> groups;
+    private static String myActivity;
     public WhatdoListAdapter(Context c, ArrayList<WhatdoListGroup> g) {
         this.context = c;
         this.groups = g;
@@ -72,7 +73,8 @@ public class WhatdoListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
 
                 if(context instanceof MainActivity) {
-                    ((MainActivity) context).AddActiveUser(b.getText().toString());
+                    myActivity = b.getText().toString();
+                    ((MainActivity) context).AddActiveUser(myActivity);
                     // DONE add button functionality - call method that creates user Object and submits it http://stackoverflow.com/questions/12142255/call-activity-method-from-adapter
                     // TODO make code to replace list with Button that replaces the WhatdoList with a Button listing the activity
                 }
@@ -119,4 +121,6 @@ public class WhatdoListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int arg0, int arg1) {
         return true;
     }
+
+    public static String getMyActivity() { return myActivity; }
 }

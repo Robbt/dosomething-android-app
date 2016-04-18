@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eutectoid.dosomething.R;
+import com.eutectoid.dosomething.WhatdoListView.Adapter.WhatdoListAdapter;
 import com.facebook.AccessToken;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
@@ -148,11 +149,31 @@ public class fetchImage {
             //Set<String> FriendsSet = ((DoSomethingApplication) getActivity().getApplication()).getFacebookFriendsSet();
             //List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
             //        .getActiveUsers(FriendsSet);
+            List<User> DisplayFriends = new ArrayList<>(FacebookFriends);
+            User myUser = DoSomethingApplication.getMyUserInfo();
+            //String myActivity = WhatdoListAdapter.getMyActivity();
+            String myActivity = myUser.getActivity();
+            String myID = myUser.getFacebookid();
+            for(User u: DisplayFriends) {
+                if(u.getFacebookid().compareToIgnoreCase(myID) == 0) {
+                    Log.d("myTag","Found and removed self");
+                    DisplayFriends.remove(u);
+                    break;
+                }
+            }
 
-            mAdapter = new FriendAdapter(FacebookFriends);
+            if(myActivity.compareToIgnoreCase("Do Anything") != 0) {
+                Log.d("myTag","myActivity is not Do Anything, it is " + myActivity);
+                for(int i = DisplayFriends.size() - 1; i >= 0; --i) {
+                    String friendActivity = DisplayFriends.get(i).getActivity();
+                    if(friendActivity.compareToIgnoreCase("Do Anything") != 0 && friendActivity.compareToIgnoreCase(myActivity) != 0) {
+                        Log.d("myTag","Friend removed with activity " + friendActivity);
+                        DisplayFriends.remove(i);
+                    }
+                }
+            }
+            mAdapter = new FriendAdapter(DisplayFriends);
             mFacebookFriendsRecyclerView.setAdapter(mAdapter);
-
-
         }
 
         private FetchPhotoTask.OnTaskCompleted listener = new FetchPhotoTask.OnTaskCompleted() {
