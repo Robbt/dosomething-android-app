@@ -126,9 +126,7 @@ public class SomethingFragment extends Fragment {
                 }
             };
     public void toggleWhatDoFragment() {
-        // TODO fix: findFragmentByTag/findFragmentById always returns null
-        //Fragment whatdoListFragment = getFragmentManager().findFragmentById(R.id.whatdocontainer);
-        Fragment whatdoListFragment = getFragmentManager().findFragmentByTag("WHATDOFRAGMENT");
+        Fragment whatdoListFragment = getChildFragmentManager().findFragmentByTag("WHATDOFRAGMENT");
         if (whatdoListFragment == null || !whatdoListFragment.isVisible()) {
             Log.d("myTag", "Fragment is null");
             whatdoListFragment = new WhatdoListFragment();
@@ -139,9 +137,11 @@ public class SomethingFragment extends Fragment {
             getFragmentManager().executePendingTransactions();
         }
         else {
-            if (whatdoListFragment != null && whatdoListFragment.isVisible()) {
-                Log.d("myTag", "whatdoFragment removed??");
-                whatdoListFragment.getActivity().getFragmentManager().popBackStack();
+            Log.d("myTag", "Fragment is NOT null");
+            if (whatdoListFragment.isVisible()) {
+                Log.d("myTag", "whatdoFragment removed");
+                getFragmentManager().beginTransaction().remove(whatdoListFragment).commit();
+                getFragmentManager().executePendingTransactions();
             }
         }
     }

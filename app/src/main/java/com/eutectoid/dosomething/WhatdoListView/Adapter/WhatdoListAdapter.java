@@ -15,6 +15,7 @@ import com.eutectoid.dosomething.User;
 import com.eutectoid.dosomething.WhatdoListChild;
 import com.eutectoid.dosomething.WhatdoListGroup;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
