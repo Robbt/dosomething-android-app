@@ -1,4 +1,6 @@
 package com.eutectoid.dosomething;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import com.facebook.FacebookSdk;
 import android.os.Bundle;
@@ -12,6 +14,8 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import java.util.List;
 
@@ -32,6 +36,7 @@ public class MainActivity extends FragmentActivity {
     private boolean userSkippedLogin = false;
     private AccessTokenTracker accessTokenTracker;
     private CallbackManager callbackManager;
+    private static final int REQUEST_ERROR = 0;
 
 
     public void AddActiveUser(String activity) {
@@ -111,6 +116,20 @@ public class MainActivity extends FragmentActivity {
     public void onResume() {
         super.onResume();
         isResumed = true;
+        int errorCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (errorCode != ConnectionResult.SUCCESS) {
+            Dialog errorDialog = GooglePlayServicesUtil
+                    .getErrorDialog(errorCode, this, REQUEST_ERROR,
+                            new DialogInterface.OnCancelListener() {
+                                @Override
+                                public void onCancel(DialogInterface dialog) {
+                                    // Leave if services are unavailable.
+                                    finish();
+                                }
+                            });
+            errorDialog.show();
+        }
+
 
         // Call the 'activateApp' method to log an app event for use in analytics and advertising
         // reporting.  Do so in the onResume methods of the primary Activities that an app may be
@@ -128,6 +147,9 @@ public class MainActivity extends FragmentActivity {
             // unless the user explicitly skipped.
             showFragment(SPLASH, false);
         }
+
+
+
     }
 
 

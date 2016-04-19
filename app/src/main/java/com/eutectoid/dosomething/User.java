@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class User {
     private String facebookid;
+    private String facebookmessengerid;
     private String username;
     private String activity;
     private boolean isactive;
@@ -32,6 +33,14 @@ public class User {
     public String getFacebookid() {
         return facebookid;
     }
+    public String getFacebookmessengerid() {
+        return facebookmessengerid;
+    }
+    public void setFacebookmessengerid(String id) {
+        facebookmessengerid = id;
+    }
+
+
     public String getActivity() {
         return activity;
     }

@@ -128,6 +128,7 @@ public class DoSomethingApplication extends Application{
         myUserDB.put("username", myUser.getUsername());
         myUserDB.put("activity", myUser.getActivity());
         myUserDB.put("isactive", myUser.getIsActive().toString());
+        myUserDB.put("facebookmessengerid", myUser.getFacebookmessengerid());
         refActive.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {

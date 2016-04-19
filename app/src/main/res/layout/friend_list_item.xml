@@ -45,12 +45,13 @@
 
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/messenger_send_button"
+        android:drawable="@drawable/sendmessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_toRightOf="@id/list_item_friend_photo"
-        android:layout_below="@id/list_item_friend_activity_text_view"
-        android:layout_margin="5dp"/>
+        android:layout_alignLeft="@+id/list_item_friend_name_text_view"
+        android:layout_alignStart="@+id/list_item_friend_name_text_view"
+        android:layout_below="@+id/list_item_friend_activity_text_view" />
 </RelativeLayout>

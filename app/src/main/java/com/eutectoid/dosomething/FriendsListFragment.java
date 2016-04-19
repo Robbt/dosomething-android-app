@@ -99,7 +99,13 @@ public class FriendsListFragment extends Fragment {
     }
 
     public Long idToLong(User u) {
-        String id = u.getFacebookid();
+        String id;
+
+        if (u.getFacebookmessengerid() == null) {
+            id = u.getFacebookid();
+        }
+         else {       id = u.getFacebookmessengerid();
+            }
         return Long.parseLong(id);
     }
 
@@ -265,9 +271,9 @@ public class fetchImage {
                 final User user = mFriends.get(position);
                 holder.bindFriend(user);
                 // TODO test messenger button
-                final Button b = (Button) view.findViewById(R.id.messenger_send_button);
+                final ImageButton b = (ImageButton) view.findViewById(R.id.messenger_send_button);
 
-                b.setOnClickListener(new Button.OnClickListener() {
+                b.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Uri uri = Uri.parse("fb-messenger://user/");

@@ -30,6 +30,7 @@ import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -60,6 +61,10 @@ import com.facebook.share.widget.MessageDialog;
 import com.facebook.share.widget.SendButton;
 import com.facebook.share.widget.ShareButton;
 import com.facebook.login.widget.ProfilePictureView;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,11 +89,12 @@ public class SomethingFragment extends Fragment {
     private static final String SHARE_ACTION_TYPE = "dosomething:action";
 
     private static final String PERMISSION = "publish_actions";
+    private GoogleApiClient mClient;
 
 
     public User myUser;
 
-        private TextView announceButton;
+    private TextView announceButton;
     private ShareButton shareButton;
     private SendButton messageButton;
     private ProfilePictureView profilePictureView;
@@ -125,6 +131,7 @@ public class SomethingFragment extends Fragment {
                     processDialogResults(result.getPostId(), false);
                 }
             };
+
     public void toggleWhatDoFragment() {
         // TODO fix: findFragmentByTag/findFragmentById always returns null
         //Fragment whatdoListFragment = getFragmentManager().findFragmentById(R.id.whatdocontainer);
@@ -137,8 +144,7 @@ public class SomethingFragment extends Fragment {
             newtransaction.add(R.id.whatdocontainer, whatdoListFragment, "WHATDOFRAGMENT");
             newtransaction.commit();
             getFragmentManager().executePendingTransactions();
-        }
-        else {
+        } else {
             if (whatdoListFragment != null && whatdoListFragment.isVisible()) {
                 Log.d("myTag", "whatdoFragment removed??");
                 whatdoListFragment.getActivity().getFragmentManager().popBackStack();
@@ -159,6 +165,19 @@ public class SomethingFragment extends Fragment {
                 updateWithToken(currentAccessToken);
             }
         };
+        mClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(Bundle bundle) {
+                        getActivity().invalidateOptionsMenu();
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int i) {
+                    }
+                })
+                .build();
 
     }
 
@@ -184,6 +203,9 @@ public class SomethingFragment extends Fragment {
         announceButton = (TextView) view.findViewById(R.id.announce_text);
         shareButton = (ShareButton) view.findViewById(R.id.share_button);
         messageButton = (SendButton) view.findViewById(R.id.message_button);
+        if (mClient.isConnected()) {
+            //getLocation();
+        }
 
 
         announceProgressDialog = new ProgressDialog(getActivity());
@@ -194,8 +216,7 @@ public class SomethingFragment extends Fragment {
         }
 
 
-
-            announceButton.setOnClickListener(new View.OnClickListener() {
+        announceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 handleAnnounce();
@@ -219,7 +240,6 @@ public class SomethingFragment extends Fragment {
         //TODO Add show FriendsList Function and Fragment FriendsListFragment
 
 
-
         profilePictureView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -236,22 +256,46 @@ public class SomethingFragment extends Fragment {
 
         return view;
     }
+    private void getLocation() {
+        LocationRequest request = LocationRequest.create();
+        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        request.setNumUpdates(1);
+        request.setInterval(0);
+        LocationServices.FusedLocationApi
+                .requestLocationUpdates(mClient, request, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        Log.i(TAG, "Got a fix: " + location);
+                    }
+                });
+    }
 
     @Override
-    public void onActivityResult ( int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
   /*       List<User> ActiveUsers =  ((DoSomethingApplication) getActivity().getApplication())
               .getActiveUsers(); */
-         List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
+        List<User> FacebookFriends = ((DoSomethingApplication) getActivity().getApplication())
                 .getFacebookFriends();
-            callbackManager.onActivityResult(requestCode, resultCode, data);
-        }
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
 
 
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
         bundle.putBoolean(PENDING_ANNOUNCE_KEY, pendingAnnounce);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mClient.connect();
+    }
+
+    public void onStop() {
+        super.onStop();
+        mClient.disconnect();
     }
 
     @Override
