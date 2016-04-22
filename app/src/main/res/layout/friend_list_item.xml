@@ -47,11 +47,12 @@
 
     <ImageButton
         android:id="@+id/messenger_send_button"
-        android:drawable="@drawable/sendmessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:src="@drawable/sendmessage"
+        android:background="@null"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_alignLeft="@+id/list_item_friend_name_text_view"
-        android:layout_alignStart="@+id/list_item_friend_name_text_view"
-        android:layout_below="@+id/list_item_friend_activity_text_view" />
+        android:layout_below="@+id/list_item_friend_activity_text_view"
+        android:layout_alignRight="@+id/list_item_friend_activity_text_view"
+        android:layout_alignEnd="@+id/list_item_friend_activity_text_view" />
 </RelativeLayout>
