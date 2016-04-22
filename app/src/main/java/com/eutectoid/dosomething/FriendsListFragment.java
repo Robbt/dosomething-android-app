@@ -152,27 +152,33 @@ public class fetchImage {
 }
 
         public void updateUI() {
+
             List<User> DisplayFriends = new ArrayList<>(FacebookFriends);
             User myUser = DoSomethingApplication.getMyUserInfo();
-            String myActivity = myUser.getActivity();
-            String myID = myUser.getFacebookid();
-            for(User u: DisplayFriends) {
-                if(u.getFacebookid().compareToIgnoreCase(myID) == 0) {
-                    DisplayFriends.remove(u);
-                    break;
-                }
-            }
-
-            if(myActivity.compareToIgnoreCase("Do Anything") != 0) {
-                for(int i = DisplayFriends.size() - 1; i >= 0; --i) {
-                    String friendActivity = DisplayFriends.get(i).getActivity();
-                    if(friendActivity.compareToIgnoreCase("Do Anything") != 0 && friendActivity.compareToIgnoreCase(myActivity) != 0) {
-                        DisplayFriends.remove(i);
+            if (myUser != null) {
+                String myActivity = myUser.getActivity();
+                String myID = myUser.getFacebookid();
+                for (User u : DisplayFriends) {
+                    if (u.getFacebookid().compareToIgnoreCase(myID) == 0) {
+                        DisplayFriends.remove(u);
+                        break;
                     }
                 }
+
+                if (myActivity.compareToIgnoreCase("Do Anything") != 0) {
+                    for (int i = DisplayFriends.size() - 1; i >= 0; --i) {
+                        String friendActivity = DisplayFriends.get(i).getActivity();
+                        if (friendActivity.compareToIgnoreCase("Do Anything") != 0 && friendActivity.compareToIgnoreCase(myActivity) != 0) {
+                            DisplayFriends.remove(i);
+                        }
+                    }
+                }
+                mAdapter = new FriendAdapter(DisplayFriends);
+                mFacebookFriendsRecyclerView.setAdapter(mAdapter);
             }
-            mAdapter = new FriendAdapter(DisplayFriends);
-            mFacebookFriendsRecyclerView.setAdapter(mAdapter);
+            else {
+
+            }
         }
 
         private FetchPhotoTask.OnTaskCompleted listener = new FetchPhotoTask.OnTaskCompleted() {

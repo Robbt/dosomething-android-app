@@ -1,9 +1,13 @@
 package com.eutectoid.dosomething;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
@@ -89,8 +93,6 @@ public class DoSomethingApplication extends Application{
         return activeUsers;
     }
     public List<User> getActiveUsers() {
-        // TODO - need to fix the sample user
-        // TODO - add fake facebook users as default ON
         // pull the value from the secrets.properties file so that it doesn't get shared via github
         String FIREBASE_DB = BuildConfig.FIREBASE_DB;
         Firebase refActive = new Firebase(FIREBASE_DB);
@@ -119,61 +121,66 @@ public class DoSomethingApplication extends Application{
 
 
     public void addUserFireBase(final User myUser) {
-        //first check to see if the user exists in the Database
-        String FIREBASE_DB = BuildConfig.FIREBASE_DB;
-        final Firebase refActive = new Firebase(FIREBASE_DB);
-        String key = new String();
-        final Map<String, String> myUserDB = new HashMap<String, String>();
-        myUserDB.put("facebookid", myUser.getFacebookid());
-        myUserDB.put("username", myUser.getUsername());
-        myUserDB.put("activity", myUser.getActivity());
-        myUserDB.put("isactive", myUser.getIsActive().toString());
-        myUserDB.put("facebookmessengerid", myUser.getFacebookmessengerid());
-        refActive.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                String key = new String();
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    User activeUser = postSnapshot.getValue(User.class);
-                    if ( activeUser.getFacebookid().equals(myUser.getFacebookid()) ) {
-                        key = postSnapshot.getKey();
-                        break;
+        if (hasNetworkConnection() ) {
+            //first check to see if the user exists in the Database
+            String FIREBASE_DB = BuildConfig.FIREBASE_DB;
+            final Firebase refActive = new Firebase(FIREBASE_DB);
+            String key = new String();
+            final Map<String, String> myUserDB = new HashMap<String, String>();
+            myUserDB.put("facebookid", myUser.getFacebookid());
+            myUserDB.put("username", myUser.getUsername());
+            myUserDB.put("activity", myUser.getActivity());
+            myUserDB.put("isactive", myUser.getIsActive().toString());
+            myUserDB.put("facebookmessengerid", myUser.getFacebookmessengerid());
+            refActive.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    String key = new String();
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        User activeUser = postSnapshot.getValue(User.class);
+                        if (activeUser.getFacebookid().equals(myUser.getFacebookid())) {
+                            key = postSnapshot.getKey();
+                            break;
+                        }
                     }
+                    if (key.isEmpty()) {
+                        Firebase newUser = refActive.push();
+                        refActive.push().setValue(myUserDB);
+                    } else {
+                        Firebase updateUser = refActive.child(key);
+                        updateUser.setValue(myUserDB);
                     }
-                if (key.isEmpty()) {
-                    Firebase newUser = refActive.push();
-                    refActive.push().setValue(myUserDB);
-                }
-                else {
-                    Firebase updateUser = refActive.child(key);
-                    updateUser.setValue(myUserDB);
-                }
                 }
 
 
-                 @Override
-                 public void onCancelled(FirebaseError firebaseError) {
-                 }
-             });
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                }
+            });
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Your internet connection is down. We can't access the server.", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
 
     public void fetchUserIDaddUser(final String activity) {
-        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        if (accessToken != null) {
-            GraphRequest request = GraphRequest.newMeRequest(
-                    accessToken, new GraphRequest.GraphJSONObjectCallback() {
-                        @Override
-                        public void onCompleted(JSONObject me, GraphResponse response) {
-                            user = me;
-                            String userID = accessToken.getUserId();
+        if (hasNetworkConnection()) {
+            final AccessToken accessToken = AccessToken.getCurrentAccessToken();
+            if (accessToken != null) {
+                GraphRequest request = GraphRequest.newMeRequest(
+                        accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject me, GraphResponse response) {
+                                user = me;
+                                String userID = accessToken.getUserId();
 
-                            String username = user.optString("name");
-                            myUserInfo = new User(userID);
-                            myUserInfo.setUsername(username);
-                            myUserInfo.setIsactive(true);
-                            myUserInfo.setActivity(activity);
+                                String username = user.optString("name");
+                                myUserInfo = new User(userID);
+                                myUserInfo.setUsername(username);
+                                myUserInfo.setIsactive(true);
+                                myUserInfo.setActivity(activity);
                             /*
                             //TODO move this into another AsyncTask that checks for existing User or utilizes a cache
                             String FIREBASE_DB = BuildConfig.FIREBASE_DB;
@@ -185,15 +192,20 @@ public class DoSomethingApplication extends Application{
                             myUserDB.put("activity", myUser.getActivity());
                             myUserDB.put("isactive", myUser.getIsActive().toString());
                             refActive.push().setValue(myUserDB); */
-                            addUserFireBase(myUserInfo);
-                        }
-                    });
-            Bundle parameters = new Bundle();
-            parameters.putString(FIELDS, REQUEST_FIELDS);
-            request.setParameters(parameters);
-            GraphRequest.executeBatchAsync(request);
-        } else {
-            user = null;
+                                addUserFireBase(myUserInfo);
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString(FIELDS, REQUEST_FIELDS);
+                request.setParameters(parameters);
+                GraphRequest.executeBatchAsync(request);
+            } else {
+                user = null;
+            }
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Your internet connection is down. We can't access the server.", Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -311,6 +323,69 @@ public class DoSomethingApplication extends Application{
             }
         }
         return null;
+    }
+
+    public boolean hasNetworkConnection(){
+        ConnectivityManager
+                connectivityManager
+                =
+                (
+                        ConnectivityManager
+                        )
+                        getSystemService
+                                (
+                                        Context.CONNECTIVITY_SERVICE
+                                );
+        NetworkInfo
+                networkInfo
+                =
+                connectivityManager.getNetworkInfo
+                        (
+                                ConnectivityManager.TYPE_WIFI
+                        );
+        boolean
+                isConnected
+                =    true;
+        boolean
+                isWifiAvailable
+                =
+                networkInfo.isAvailable
+                        ();
+        boolean
+                isWifiConnected
+                =
+                networkInfo.isConnected
+                        ();
+        networkInfo
+                =
+                connectivityManager.getNetworkInfo
+                        (
+                                ConnectivityManager.TYPE_MOBILE
+                        );
+        boolean
+                isMobileAvailable
+                =
+                networkInfo.isAvailable
+                        ();
+        boolean
+                isMobileConnnected
+                =
+                networkInfo.isConnected
+                        ();
+        isConnected
+                =    (
+                isMobileAvailable
+                        &&
+                        isMobileConnnected
+        )    ||
+                (
+                        isWifiAvailable
+                                &&
+                                isWifiConnected
+                );
+        return(
+                isConnected
+        );
     }
 
     public static User getMyUserInfo() { return myUserInfo; }
